@@ -22,12 +22,9 @@
   border-color: $textColorDark;
   color: $textColorDark;
 }
-::ng-deep .p-button {
-  padding-block: 0;
-}
-
 ::ng-deep .p-button-label {
   line-height: 1.5;
+  padding-block: toRem(12);
   color: $textColorDark;
   font-family: $fontHelvetica-neue;
 }
@@ -52,10 +49,10 @@
     color: $textColorDark;
   }
   ::ng-deep span {
-    @include adaptiveValue('padding-block', 15, 11);
+    @include adaptiveValue("padding-block", 15, 11);
     border: toRem(0.5) solid $backgroundColorLight;
     @media (max-width: toEm(482)) {
-      @include adaptiveValue('padding-block', 15, 9);
+      @include adaptiveValue("padding-block", 15, 9);
     }
   }
 }
