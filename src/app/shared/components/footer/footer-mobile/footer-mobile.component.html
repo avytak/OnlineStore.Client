@@ -1,0 +1,75 @@
+<div class="footer-block">
+  <!-- subscribe-container -->
+  <div class="subscribe-container">
+    <h4 class="subscribe-container__title">Subscribe to our newsletter</h4>
+
+    <div class="subscribe-block">
+      <p-inputgroup>
+        <input class="custom-input" type="email" pInputText placeholder="E-mail" [(ngModel)]="email" required email />
+      </p-inputgroup>
+      <app-subscribe-button></app-subscribe-button>
+    </div>
+    <div class="privicy-statement">
+      <p>By clicking on “Subscribe”, you confirm that you have read and understood our <a href="#">Privacy
+          Statement</a> and that you want to receive the newsletter and other marketing communication as set out
+        therein.</p>
+    </div>
+  </div>
+
+  <!-- line -->
+  <div class="footer-line"></div>
+
+  <!-- logo - media -->
+  <div class="logo-media">
+    <h1><a href="#" class="home-link">Dressify</a></h1>
+    <ul class="list-social-media">
+      <li class="item">
+        <a class="link-facebook" href="#">
+        </a>
+      </li>
+      <li class="item">
+        <a class="link-instagram" href="#">
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- list of services accardion -->
+  <div class="list-of-service">
+
+    <div class="card flex justify-center">
+      <p-accordion value="0">
+        <p-accordion-panel value="0">
+          <p-accordion-header>Categories</p-accordion-header>
+          <p-accordion-content class="accordion-links-block">
+            <a *ngFor="let category of categories" [href]="category.link" class="link">
+              {{ category.name }}
+            </a>
+          </p-accordion-content>
+        </p-accordion-panel>
+
+        <p-accordion-panel value="1">
+          <p-accordion-header>About us</p-accordion-header>
+          <p-accordion-content>
+            <a *ngFor="let list of aboutUsList" [href]="list.link" class="p-2">
+              {{ list.name }}
+            </a>
+          </p-accordion-content>
+        </p-accordion-panel>
+
+        <p-accordion-panel value="2">
+          <p-accordion-header>Ordering and support</p-accordion-header>
+          <p-accordion-content>
+            <a *ngFor="let list of orderingSupportList" [href]="list.link" class="p-2">
+              {{ list.name }}
+            </a>
+          </p-accordion-content>
+        </p-accordion-panel>
+      </p-accordion>
+    </div>
+  </div>
+  <div class="policies">
+    <p>All rights reserved</p>
+    <p>Dressify group</p>
+  </div>
+</div>

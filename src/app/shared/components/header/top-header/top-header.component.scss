@@ -1,12 +1,43 @@
+@import "../../../../../styles/base/mixins";
+@import "../../../../../styles/base/fonts";
 :host {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  overflow: hidden;
 }
 
-.pi {
-  width: 24px;
-  height: 24px;
+.users-gender {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include adaptiveValue("font-size", 24, 8);
+  flex-shrink: 0;
+  @include adaptiveValue("gap", 20, 5);
+  font-family: $fontSora;
+}
+h2 {
+  @include adaptiveValue("font-size", 36, 16);
+  line-height: 1.8;
+  font-family: $fontSora;
+}
+.user-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include adaptiveValue("gap", 20, 5);
+}
+
+.basket {
+  @include adaptiveValue('width', 24, 15);
+  @include adaptiveValue('height', 24, 15);
+}
+
+.basket-svg {
+  width: 100%;
+}
+.pi-user,
+.pi-heart {
+  @include adaptiveValue('font-size', 24, 15);
+  border: 0;
 }

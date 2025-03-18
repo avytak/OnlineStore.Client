@@ -1,0 +1,79 @@
+<div class="title">Log In</div>
+
+<form [formGroup]="authData" (ngSubmit)="onSubmit()" class="form-wrapper">
+  <div class="card flex justify-center">
+    <div class="flex flex-col gap-2">
+      <label for="useremail">Email</label>
+      <input
+        pInputText
+        id="email"
+        formControlName="email"
+        placeholder="lanaluk1977@gmail.com"
+        aria-describedby="email-help"
+      />
+      <p-message *ngIf="authData.get('email')?.invalid && authData.get('email')?.touched" severity="error" variant="simple">
+        Please enter a valid email.
+      </p-message>
+    </div>
+  </div>
+
+  <div class="card flex justify-center">
+    <div class="flex flex-col gap-2">
+      <label for="userpassword">Password</label>
+      <input
+      [type]="isPasswordVisible ? 'text' : 'password'"
+        pInputText
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="Enter your password"
+      />
+      <i
+      class="pi"
+      [ngClass]="isPasswordVisible ? 'pi-eye-slash' : 'pi-eye'"
+      (click)="togglePasswordVisibility()"
+    ></i>
+      <p-message *ngIf="authData.get('password')?.invalid && authData.get('password')?.touched" severity="error" variant="simple">
+        Password is required.
+      </p-message>
+    </div>
+  </div>
+
+  <div class="reminder-top">
+    <div class="forgotten-password">
+      <a href="#">Forgotten password?</a>
+    </div>
+    <div class="reminder-data">
+      <input class="remember-me" type="checkbox" />
+      <label for="rememberme" class="ml-2">Remember me</label>
+    </div>
+  </div>
+  <!-- Additional Block for Login Actions -->
+  <div class="additional-info login-btn">
+
+    <div class="confirms-block">
+      <div class="card flex justify-center">
+        <p-button
+          class="auth-btn"
+          label="Log In"
+          [disabled]="authData.invalid"
+          type="submit"
+        ></p-button>
+      </div>
+      <div class="card flex flex-wrap gap-4 justify-center">
+        <p-button
+          severity="secondary"
+          [link]="true"
+          class="login-google-btn"
+          label="Log in with Google"
+          variant="outlined"
+        ></p-button>
+      </div>
+    </div>
+
+    <div class="additional-info-bottom">
+      <a href="#"><span>Don`t you have account?</span></a>
+      <a (click)="openSignUp()" href="#" class="additional-info-bottom__sigin">Sign Up</a>
+    </div>
+  </div>
+</form>

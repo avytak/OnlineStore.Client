@@ -1,0 +1,67 @@
+<div class="title">Sign Up</div>
+<!-- form block -->
+<form [formGroup]="authData" class="form-wrapper">
+  <div class="card flex justify-center">
+    <div class="flex flex-col gap-2">
+      <label for="useremail">Email</label>
+      <input pInputText id="useremail" formControlName="email" placeholder="lanaluk1977@gmail.com" />
+      <p-message *ngIf="authData.get('email')?.hasError('email')" severity="error" variant="simple">incorrect
+        email</p-message>
+    </div>
+  </div>
+
+  <div class="card flex justify-center">
+    <div class="flex flex-col gap-2 userpassword">
+      <label for="userpassword">Password</label>
+      <div class="password-wrapper">
+        <input [type]="isPasswordVisible ? 'text' : 'password'" pInputText id="userpassword" formControlName="password"
+          placeholder="Enter your password" />
+        <i class="pi" [ngClass]="isPasswordVisible ? 'pi-eye-slash' : 'pi-eye'" (click)="togglePasswordVisibility()"></i>
+      </div>
+      <p-message *ngIf="authData.hasError('passwordsNotMatch')" severity="error" variant="simple">
+        Password must contain numbers and symbols and uppercase and lowercase</p-message>
+    </div>
+  </div>
+
+  <div class="card flex justify-center">
+    <div class="flex flex-col gap-2 userpassword">
+      <label for="repassword">Re-enter Password</label>
+      <div class="password-wrapper">
+        <input [type]="isPasswordVisible ? 'text' : 'password'" pInputText id="repassword" formControlName="rePassword"
+          placeholder="Repeat password" />
+        <i class="pi" [ngClass]="isPasswordVisible ? 'pi-eye-slash' : 'pi-eye'" (click)="togglePasswordVisibility()"></i>
+      </div>
+      <p-message *ngIf="authData.hasError('passwordsNotMatch')" severity="error" variant="simple">Passwords do not match.</p-message>
+    </div>
+  </div>
+</form>
+
+<!-- top -->
+<div class="reminder-top">
+  <a href="#" class="forgotten-password">Forgotten password?</a>
+  <div class="reminder-data">
+    <input id="rememberme" type="checkbox" formControlName="rememberMe" />
+    <label for="rememberme">Remember me</label>
+  </div>
+</div>
+
+<!-- additional block -->
+<div class="additional-info login-btn">
+  <div class="confirms-block">
+    <div class="card flex justify-center">
+      <p-button (click)="onSubmit()" class="auth-btn" label="Sign Up" [disabled]="!authData.valid" />
+    </div>
+
+    <div class="card flex flex-wrap gap-4 justify-center login-google">
+      <p-button severity="secondary" [link]="true" class="login-google-btn" label="Log in with Google"
+        variant="outlined" />
+    </div>
+
+    <a href="#" class="login-guest">Log in as a guest</a>
+  </div>
+
+  <div class="additional-info-bottom">
+    <a href="#"><span>Don`t you have account?</span></a>
+    <a class="additional-info-bottom__login" (click)="openLogIn()" href="#">Log In</a>
+  </div>
+</div>

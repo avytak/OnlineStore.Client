@@ -1,0 +1,182 @@
+@import "../../../../styles/base/mixins";
+@import "../../../../styles/base/fonts";
+@import "../../../../styles/base/colors";
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: toRem(20);
+  font-family: $fontHelvetica-neue;
+}
+::ng-deep .p-dialog {
+  border-radius: 0;
+  width: 35%;
+  min-width: toRem(300);
+  // padding: toRem(30) toRem(26) toRem(31);
+}
+::ng-deep .p-dialog-header {
+  padding: 0;
+}
+::ng-deep .p-inputtext {
+  border-radius: 0;
+}
+::ng-deep .p-inputtext::placeholder {
+  font-size: toRem(14);
+}
+
+::ng-deep .userpassword i {
+  right: toRem(10);
+  cursor: pointer;
+  transform: translateY(100%) !important;
+}
+::ng-deep .userpassword i {
+  position: absolute;
+  top: 24% !important;
+}
+// title-block
+.title {
+  font-family: $fontHeiti;
+  margin: 0 auto;
+  font-weight: 400;
+  font-size: toRem(34);
+  line-height: 1.5;
+}
+
+// form block
+.form-wrapper {
+  margin-top: toRem(12);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: toRem(14);
+}
+.card {
+  width: 100%;
+}
+.flex,
+.flex .userpassword {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: toRem(4);
+}
+.userpassword {
+  position: relative;
+  display: inline-block;
+}
+.userpassword input {
+  padding-right: toRem(30);
+}
+.p-inputtext:enabled:focus {
+  border-color: $textColorDark
+}
+// additional-info block
+
+.additional-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include adaptiveValue("gap", 50, 20);
+  width: 100%;
+}
+.reminder-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: toRem(10);
+  font-weight: 400;
+  font-size: toRem(12);
+  line-height: 2.6;
+}
+
+.forggoten-password {
+  text-decoration: underline;
+  max-width: toRem(120);
+}
+.reminder-data {
+  display: flex;
+  max-width: toRem(123);
+  gap: toRem(4);
+  align-items: center;
+  @include adaptiveValue("font-size", 12, 8);
+  justify-content: space-between;
+
+  label,
+  .reminder-top {
+    white-space: nowrap;
+  }
+  .remember-me {
+    width: toRem(12.75);
+    height: toRem(12.75);
+  }
+}
+
+// btns block
+.confirms-block {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: toRem(20);
+  max-width: toRem(249);
+  height: toRem(223);
+  width: 100%;
+
+  ::ng-deep button {
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+::ng-deep .p-button-label {
+  font-weight: 500;
+  font-size: toRem(16);
+  color: $textColorLight;
+  border: 0;
+}
+
+::ng-deep .login-google-btn span {
+  font-weight: 400;
+  font-size: toRem(16);
+  line-height: 1.5;
+  color: #000;
+  padding-block: toRem(7);
+}
+.p-button-outlined.p-button-secondary {
+  background-color: #000;
+}
+
+.login-as-guest {
+  margin: 0 auto;
+  background-color: #fff;
+  font-weight: 400;
+  font-size: toRem(14);
+  line-height: 1.5;
+  text-decoration: underline;
+}
+.additional-info-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: toRem(20);
+  font-size: toRem(14);
+  font-family: $fontSora;
+  font-weight: 400;
+  line-height: 1.5;
+}
+::ng-deep .auth-btn button {
+  --p-button-primary-background: #000;
+  // background: #000 ;
+  border: 1px solid #000;
+  opacity: 1 !important;
+}
+
+.additional-info-bottom {
+  &__login {
+    text-decoration: underline;
+  }
+}
