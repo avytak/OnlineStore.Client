@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { LoginComponent } from '../login/login.component';
 import { ApiAuthService } from '@shared/services/api/api-auth.service';
 import { Observable, map, catchError, of, switchMap } from 'rxjs';
-import { LoginResponse, RegistrationResponse} from '@shared/interfaces/auth-responses';
+import { LoginResponse, RegistrationResponse } from '@shared/interfaces/auth-responses';
+import { UserInformation } from '@shared/interfaces/user-information';
 
 @Component({
   selector: 'app-signup',
@@ -75,47 +76,56 @@ export class SignupComponent {
     authType: 'Log In' | 'Sign Up',
     credentials: { email: string; password: string }
   ): Observable<{ success: boolean; message: string }> {
+    const { email, password } = credentials;
+
     if (authType === 'Log In') {
-      return this.apiAuthService
-        .loginUser(credentials.email, credentials.password)
-        .pipe(
-          map((res: LoginResponse) => {
-            if (res.token && res.user) {
-              this.setToken(res.token);
-              this.setUser(res.user);
-              return { success: true, message: 'Login successful' };
-            }
-            return { success: false, message: res.message || 'Login error' };
-          }),
-          catchError(() =>
-            of({ success: false, message: 'Invalid email or password' })
-          )
-        );
+      return this.apiAuthService.loginUser(email, password).pipe(
+        map((res: LoginResponse) => {
+          if (res.token && res.user) {
+            this.setToken(res.token);
+            this.setUser(res.user);
+            return { success: true, message: 'Login successful' };
+          }
+          return { success: false, message: res.message || 'Login error' };
+        }),
+        catchError(() =>
+          of({ success: false, message: 'Invalid email or password' })
+        )
+      );
     }
 
     if (authType === 'Sign Up') {
-      return this.apiAuthService.checkEmail(credentials.email).pipe(
-        switchMap((res) => {
-          if (res.exists) {
-            return of({ success: false, message: 'Email already exists' });
+      return this.apiAuthService.registerUser(email, password).pipe(
+        switchMap((res: RegistrationResponse) => {
+          const user = res.user as UserInformation;
+    
+          if (
+            res.success &&
+            res.token &&
+            user &&
+            typeof user.id === 'number' &&
+            typeof user.email === 'string'
+          ) {
+            this.setToken(res.token);
+            this.setUser({
+              id: user.id,
+              email: user.email,
+            });
+            return of({ success: true, message: 'Registration successful' });
           }
-
-          return this.apiAuthService
-            .registerUser(credentials.email, credentials.password)
-            .pipe(
-              map((res: RegistrationResponse) => {
-                this.setToken(res.token);
-                this.setUser(res.user as { id: number; email: string });
-                return { success: true, message: 'Registration successful' };
-              }),
-              catchError(() =>
-                of({ success: false, message: 'Registration failed' })
-              )
-            );
+    
+          return of({
+            success: false,
+            message: res.message || 'Registration failed',
+          });
         }),
-        catchError(() => of({ success: false, message: 'Email check failed' }))
+        catchError(() =>
+          of({ success: false, message: 'Registration request failed' })
+        )
       );
     }
+    
+
     return of({ success: false, message: 'Unknown authorization type' });
   }
 

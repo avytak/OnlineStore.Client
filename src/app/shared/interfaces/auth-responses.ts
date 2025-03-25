@@ -13,7 +13,7 @@ export interface RegistrationResponse {
   token: string;
   success: boolean;
   message?: string;
-  user?: UserInformation;
+  user?: Partial<UserInformation>;
 }
 
 export interface LoginResponse {
