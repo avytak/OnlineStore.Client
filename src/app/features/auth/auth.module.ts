@@ -1,22 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { Message } from 'primeng/message';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { CheckPasswordEqualDirective } from './directives/check-password-equal.directive';
+import { UiKitModule } from '../../shared/ui-kit/ui-kit.module';
+import { InputGroup } from 'primeng/inputgroup';
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent, CheckPasswordEqualDirective],
+  declarations: [LoginComponent, SignupComponent],
   imports: [
-    FormsModule,
-    InputTextModule,
-    Message,
     ReactiveFormsModule,
     CommonModule,
-    ButtonModule,
-  ]
+    InputGroup,
+    UiKitModule
+  ],
+  exports: [SignupComponent, LoginComponent]
 })
 export class AuthModule {}

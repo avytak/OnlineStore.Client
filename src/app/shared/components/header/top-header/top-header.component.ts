@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
-import { ApiAuthService } from '../../../services/api/api-auth.service';
-import { SignupComponent } from '../../../../features/auth/signup/signup.component';
+import { ApiAuthService } from '@shared/services/api/api-auth.service';
+import { SignupComponent } from '@features/auth/signup/signup.component';
 
 @Component({
   selector: 'app-top-header',

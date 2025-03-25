@@ -30,10 +30,18 @@
               }
             ],
             "styles": [
-              "node_modules/primeicons/primeicons.css",
-              "src/styles.scss"
+              "node_modules/primeflex/primeflex.css",
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles",
+                "src/styles/base",
+                "src/styles/overriders"
+            ]
+            }
           },
           "configurations": {
             "production": {

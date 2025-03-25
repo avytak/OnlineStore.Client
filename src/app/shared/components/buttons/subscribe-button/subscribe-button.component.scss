@@ -1,6 +1,4 @@
-@import "../../../../../styles/base/colors";
-@import "../../../../../styles/base/mixins";
-
+@import "main";
 ::ng-deep button {
   width: 100%;
 }
@@ -8,7 +6,6 @@
   border-color: $textColorDark !important;
   color: $textColorDark !important;
 }
-
 ::ng-deep .p-button-outlined {
   padding-block: 0;
   border-radius: 0;
@@ -28,23 +25,21 @@
   color: $textColorDark;
   font-family: $fontHelvetica-neue;
 }
-
 @media (max-width: toEm(640)) {
   ::ng-deep .subscribe-btn {
     background-color: $textColorLight;
     border-color: $textColorLight;
     color: $textColorLight;
   }
-
   ::ng-deep .p-button-outlined {
     background-color: $backgroundColorLight;
     border-color: $textColorLight;
+    &:hover {
+      border-color: $textColorLight;
+      color: $textColorLight !important;
+      background: $textColorDark !important;
+    }
   }
-
-  ::ng-deep .p-button-outlined:hover {
-    border-color: $textColorLight;
-  }
-
   ::ng-deep .p-button-label {
     color: $textColorDark;
   }

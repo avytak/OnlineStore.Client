@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputTextModule } from 'primeng/inputtext';
 import { SubscribeButtonComponent } from "../../buttons/subscribe-button/subscribe-button.component";
+import { UiKitModule } from '@shared/ui-kit/ui-kit.module';
 
 @Component({
   selector: 'app-footer-desktop',
-  imports: [FormsModule, InputTextModule, InputGroupModule, ButtonModule, SubscribeButtonComponent],
+  imports: [FormsModule, UiKitModule, SubscribeButtonComponent],
   templateUrl: './footer-desktop.component.html',
   styleUrl: './footer-desktop.component.scss'
 })

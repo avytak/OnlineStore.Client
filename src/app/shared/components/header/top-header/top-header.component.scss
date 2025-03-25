@@ -1,5 +1,4 @@
-@import "../../../../../styles/base/mixins";
-@import "../../../../../styles/base/fonts";
+@import "main";
 :host {
   display: flex;
   align-items: center;
@@ -27,12 +26,10 @@ h2 {
   align-items: center;
   @include adaptiveValue("gap", 20, 5);
 }
-
 .basket {
   @include adaptiveValue('width', 24, 15);
   @include adaptiveValue('height', 24, 15);
 }
-
 .basket-svg {
   width: 100%;
 }

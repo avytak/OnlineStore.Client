@@ -1,7 +1,4 @@
-@import "../../../../../styles/base/mixins";
-@import "../../../../../styles/base/fonts";
-@import "../../../../../styles/base/colors";
-@import "../../../../../styles/base/variables";
+@import "main";
 
 .footer-block {
   color: $textColorDark;
@@ -13,7 +10,6 @@
   max-width: toRem(1300);
   justify-content: space-between;
 }
-
 .footer-line {
   width: 100%;
   height: toRem(1);

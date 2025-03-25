@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputTextModule } from 'primeng/inputtext';
 import { LinkItem } from '../../../interfaces/linkItem';
-import { Select } from 'primeng/select';
-import { AccordionModule } from 'primeng/accordion';
 import { CommonModule } from '@angular/common';
 import { SubscribeButtonComponent } from "../../buttons/subscribe-button/subscribe-button.component";
+import { UiKitModule } from '@shared/ui-kit/ui-kit.module';
 
 @Component({
   selector: 'app-footer-mobile',
-  imports: [FormsModule, AccordionModule, CommonModule, InputTextModule, InputGroupModule, ButtonModule, SubscribeButtonComponent],
+  imports: [FormsModule, CommonModule, UiKitModule, SubscribeButtonComponent],
   templateUrl: './footer-mobile.component.html',
   styleUrl: './footer-mobile.component.scss'
 })

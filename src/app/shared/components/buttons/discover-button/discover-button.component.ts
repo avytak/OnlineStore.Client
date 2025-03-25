@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
+import { UiKitModule } from '@shared/ui-kit/ui-kit.module';
 
 @Component({
   selector: 'app-discover-button',
-  imports: [ButtonModule, RouterModule],
+  imports: [UiKitModule, RouterModule],
   templateUrl: './discover-button.component.html',
   styleUrl: './discover-button.component.scss'
 })

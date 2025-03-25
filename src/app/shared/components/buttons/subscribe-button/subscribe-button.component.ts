@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
+import { UiKitModule } from '@shared/ui-kit/ui-kit.module';
 
 @Component({
   selector: 'app-subscribe-button',
-  imports: [ButtonModule],
+  imports: [UiKitModule],
   templateUrl: './subscribe-button.component.html',
   styleUrl: './subscribe-button.component.scss'
 })

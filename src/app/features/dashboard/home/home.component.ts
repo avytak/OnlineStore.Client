@@ -4,8 +4,8 @@ import { NewInSectionComponent } from './new-in-section/new-in-section.component
 import { BestsellersComponent } from './bestsellers/bestsellers.component';
 import { SpecialSaleComponent } from './special-sale/special-sale.component';
 import { BrandsComponent } from './brands/brands.component';
-import { HeaderComponent } from '../../../shared/components/header/header.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { HeaderComponent } from '@shared/components/header/header.component';
+import { FooterComponent } from '@shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-home',

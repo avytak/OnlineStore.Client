@@ -1,5 +1,4 @@
-@import "../../../../../styles/base/mixins";
-@import "../../../../../styles/base/colors";
+@import "main";
 
 .new-in-section {
   padding-inline: toRem(10);
@@ -25,7 +24,6 @@
   grid-template-columns: repeat(2, minmax(0, toRem(635)));
   @include adaptiveValue("column-gap", 30, 5);
 }
-
 .card {
   position: relative;
   max-width: toRem(635);

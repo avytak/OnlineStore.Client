@@ -1,3 +1,5 @@
+import { UserInformation } from './user-information';
+
 export interface AuthResponses {}
 export interface PasswordValidationResponse {
   valid: boolean;
@@ -8,12 +10,10 @@ export interface EmailExistenceResponse {
 }
 
 export interface RegistrationResponse {
+  token: string;
   success: boolean;
   message?: string;
-  user?: {
-    id: number;
-    email: string;
-  };
+  user?: UserInformation;
 }
 
 export interface LoginResponse {

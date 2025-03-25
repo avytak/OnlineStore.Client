@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { LoginComponent } from '../login/login.component';
-import { LocalStorageAuthService } from '../../../shared/services/local-storage/local-storage-auth.service';
+import { ApiAuthService } from '@shared/services/api/api-auth.service';
+import { Observable, map, catchError, of, switchMap } from 'rxjs';
+import { LoginResponse, RegistrationResponse} from '@shared/interfaces/auth-responses';
 
 @Component({
   selector: 'app-signup',
@@ -18,11 +20,14 @@ export class SignupComponent {
 
   constructor(
     private fb: FormBuilder,
-    private localStorageAuthService: LocalStorageAuthService,
+    private apiAuthService: ApiAuthService,
     private dialogService: DialogService,
     private ref: DynamicDialogRef
   ) {
-    this.authData = this.fb.group(
+    this.authData = this.buildForm();
+  }
+  private buildForm(): FormGroup {
+    return this.fb.group(
       {
         email: [null, [Validators.email, Validators.required]],
         password: [
@@ -34,12 +39,15 @@ export class SignupComponent {
           ],
         ],
         rePassword: [null, [Validators.required]],
+        rememberMe: [false],
       },
       { validators: this.passwordsMatchValidator }
     );
   }
 
-  public passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
+  public passwordsMatchValidator(
+    control: AbstractControl
+  ): ValidationErrors | null {
     const passwordControl = control.get('password');
     const rePasswordControl = control.get('rePassword');
 
@@ -63,42 +71,73 @@ export class SignupComponent {
     this.isFormValid = this.authData.valid;
   }
 
-  public authorization(authType: 'Log In' | 'Sign Up', credentials: { email: string; password: string }): void {
+  public authorization(
+    authType: 'Log In' | 'Sign Up',
+    credentials: { email: string; password: string }
+  ): Observable<{ success: boolean; message: string }> {
     if (authType === 'Log In') {
-      const isAuthenticated = this.localStorageAuthService.loginUser(credentials.email, credentials.password);
-      if (isAuthenticated) {
-        console.log('Успішний вхід');
-      } else {
-        console.error('Невірний email або пароль');
-      }
-    } else if (authType === 'Sign Up') {
-      const emailExists = this.localStorageAuthService.checkEmailExists(credentials.email);
-
-      if (emailExists) {
-        console.error('Email вже існує');
-        return;
-      }
-
-      const newUser = {
-        id: Date.now(), // Умовний унікальний ідентифікатор
-        email: credentials.email,
-        password: credentials.password,
-      };
-
-      this.localStorageAuthService.registerUser(newUser);
-      console.log('Успішна реєстрація');
-    } else {
-      console.error('Невідомий тип авторизації');
+      return this.apiAuthService
+        .loginUser(credentials.email, credentials.password)
+        .pipe(
+          map((res: LoginResponse) => {
+            if (res.token && res.user) {
+              this.setToken(res.token);
+              this.setUser(res.user);
+              return { success: true, message: 'Login successful' };
+            }
+            return { success: false, message: res.message || 'Login error' };
+          }),
+          catchError(() =>
+            of({ success: false, message: 'Invalid email or password' })
+          )
+        );
     }
 
-    this.checkFormValidity();
+    if (authType === 'Sign Up') {
+      return this.apiAuthService.checkEmail(credentials.email).pipe(
+        switchMap((res) => {
+          if (res.exists) {
+            return of({ success: false, message: 'Email already exists' });
+          }
+
+          return this.apiAuthService
+            .registerUser(credentials.email, credentials.password)
+            .pipe(
+              map((res: RegistrationResponse) => {
+                this.setToken(res.token);
+                this.setUser(res.user as { id: number; email: string });
+                return { success: true, message: 'Registration successful' };
+              }),
+              catchError(() =>
+                of({ success: false, message: 'Registration failed' })
+              )
+            );
+        }),
+        catchError(() => of({ success: false, message: 'Email check failed' }))
+      );
+    }
+    return of({ success: false, message: 'Unknown authorization type' });
+  }
+
+  setToken(token: string | undefined) {
+    throw new Error('Method not implemented.');
+  }
+  setUser(user: { id: number; email: string } | undefined) {
+    throw new Error('Method not implemented.');
   }
 
   public onSubmit(): void {
     if (this.authData.valid) {
       const { email, password } = this.authData.value;
-      this.authorization('Sign Up', { email, password });
-      console.log('Form submitted:', this.authData.value);
+
+      this.authorization('Sign Up', { email, password }).subscribe((result) => {
+        if (result.success) {
+          console.log('Form submitted:', this.authData.value);
+          this.ref.close({ email, password });
+        } else {
+          console.error(result.message);
+        }
+      });
       // this.router.navigate(['/dashboard']);
     } else {
       console.error('Form is invalid');
@@ -106,19 +145,23 @@ export class SignupComponent {
   }
 
   public openLogIn(): void {
-    this.dialogService
-      .open(LoginComponent, {
-        modal: true,
-        closable: true,
-      })
-      .onClose.subscribe((result) => {
-        if (result) {
-          const { email, password } = this.authData.value;
-          this.ref.close({ email, password });
-        }
+    const dialogRef = this.dialogService.open(LoginComponent, {
+      modal: true,
+      closable: true,
+    });
+
+    const subscription = dialogRef.onClose.subscribe((result) => {
+      if (result) {
+        const { email, password } = this.authData.value;
+        this.ref.close({ email, password });
+      } else {
         this.ref.close();
-      });
+      }
+
+      subscription.unsubscribe();
+    });
   }
+
   public togglePasswordVisibility(): void {
     this.isPasswordVisible = !this.isPasswordVisible;
   }

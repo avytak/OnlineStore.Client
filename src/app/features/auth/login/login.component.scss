@@ -1,41 +1,12 @@
-@import "../../../../styles/base/_mixins";
-@import "../../../../styles/base/fonts";
-@import "../../../../styles/base/colors";
+@import "main";
 
 :host {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
   flex-direction: column;
   gap: toRem(20);
   font-family: $fontHelvetica-neue;
 }
-::ng-deep .p-dialog {
-  border-radius: 0;
-  width: 35%;
-  min-width: toRem(290);
-  // padding: toRem(30) toRem(26) toRem(31);
-}
-::ng-deep .p-dialog-header {
-  padding: 0;
-}
-::ng-deep .p-inputtext {
-  border-radius: 0;
-}
-::ng-deep .p-inputtext::placeholder {
-  font-size: toRem(14);
-}
-.p-inputtext:enabled:focus {
-  border-color: $textColorDark;
-}
-::ng-deep .userpassword i {
-  // transform: translateY(50%) !important;
-}
-::ng-deep .userpassword i {
-  position: absolute;
-  // top: 24% !important;
-}
-// title-block
+
 .title {
   margin: 0 auto;
   font-family: $fontHeiti;
@@ -43,101 +14,9 @@
   font-size: toRem(34);
   line-height: 1.5;
 }
-
-// form block
-.form-wrapper {
-  margin-top: toRem(12);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: toRem(14);
-}
-.card {
-  width: 100%;
-}
-.flex,
-.flex .userpassword {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: toRem(4);
-  position: relative;
-}
-.p-inputtext {
-  // display: inline-block;
-}
-.p-inputtext {
-  // padding-right: toRem(30);
-}
-.pi {
-  position: absolute;
-  top: 65%;
-  right: toRem(15);
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-
-// additional-info block
-
-.additional-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: toRem(10);
-  width: 100%;
-}
-.reminder-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  gap: toRem(10);
-  // font-family: serif;
-  font-weight: 400;
-  font-size: toRem(12);
-  line-height: 2.6;
-}
-
 .forggoten-password {
   text-decoration: underline;
   max-width: toRem(120);
-}
-.reminder-data {
-  display: flex;
-  max-width: toRem(103);
-  gap: toRem(4);
-  align-items: center;
-  justify-content: space-between;
-
-  .remember-me {
-    width: toRem(12.75);
-    height: toRem(12.75);
-  }
-}
-
-// btns block
-.confirms-block {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: toRem(20);
-  width: toRem(249);
-  height: toRem(223);
-
-  ::ng-deep button {
-    width: 100%;
-    border-radius: 0;
-  }
-}
-
-::ng-deep.login-google-btn {
-  font-weight: 400;
-  font-size: toRem(16);
-  line-height: 1.5;
-  background-color: #fff;
 }
 
 .login-as-guest {
@@ -148,22 +27,23 @@
   line-height: 1.5;
   text-decoration: underline;
 }
-.additional-info-bottom {
+
+.additional-info-bottom__sigin {
+  text-decoration: underline;
+}
+.reminder-data {
   display: flex;
+  max-width: toRem(123);
   align-items: center;
-  justify-content: center;
-  gap: toRem(20);
-  font-size: toRem(14);
-  font-weight: 400;
-  line-height: 1.5;
-}
-::ng-deep .auth-btn button {
-  --p-button-primary-background: #000;
-  border: 1px solid #000;
-  opacity: 1 !important;
-}
-.additional-info-bottom {
-  &__sigin {
-    text-decoration: underline;
+  gap: toRem(4);
+  justify-content: space-between;
+
+  label {
+    white-space: nowrap;
+  }
+
+  .remember-me {
+    width: toRem(12.75);
+    height: toRem(12.75);
   }
 }

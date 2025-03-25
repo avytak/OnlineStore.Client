@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DiscoverButtonComponent } from "../../../../shared/components/buttons/discover-button/discover-button.component";
+import { DiscoverButtonComponent } from "@shared/components/buttons/discover-button/discover-button.component";
 
 
 @Component({

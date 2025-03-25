@@ -7,7 +7,7 @@ import { Product } from '../../interfaces/product';
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'https://api.example.com/products';
+  private apiUrl = 'https://dressify.onrender.com';
 
   constructor(private http: HttpClient) {}
 

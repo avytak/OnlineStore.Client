@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostListener, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TopHeaderComponent } from "./top-header/top-header.component";
 import { BottomHeaderComponent } from "./bottom-header/bottom-header.component";
 import { CommonModule } from '@angular/common';
