@@ -7,14 +7,14 @@ import { routes } from './app.routes';
 import { MyPreset } from '../styles';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthModule } from './features/auth/auth.module';
-import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { AuthInterceptor } from '@core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([authInterceptor])
+      withInterceptors([AuthInterceptor])
     ),
     provideAnimations(),
     providePrimeNG({

@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
+import { inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SignupComponent } from '../signup/signup.component';
-import { LocalStorageAuthService } from '@shared/services/local-storage/local-storage-auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '@core/services/auth.service';
+import { ApiAuthService } from '@shared/services/api/api-auth.service';
+import { StorageType } from '@core/enums/storage-type';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +18,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   public isPasswordVisible: boolean = false;
   public authData: FormGroup;
+  public destroyRef = inject(DestroyRef);
 
   constructor(
     private dialogService: DialogService,
@@ -21,7 +26,8 @@ export class LoginComponent {
     private config: DynamicDialogConfig,
     private fb: FormBuilder,
     private router: Router,
-    private localStorageAuthService: LocalStorageAuthService
+    private authService: AuthService,
+    private apiAuthService: ApiAuthService,
   ) {
     this.authData = this.fb.group({
       email: [null, [Validators.email, Validators.required]],
@@ -31,27 +37,31 @@ export class LoginComponent {
   }
 
   public onSubmit(): void {
-    console.log('FORM SUBMITTED');
     this.authData.markAllAsTouched();
 
     if (this.authData.invalid) {
-      console.warn('Form is invalid')
       return;
     }
 
-    const { email, password } = this.authData.value;
-    const isAuthenticated = this.localStorageAuthService.loginUser(
-      email,
-      password
-    );
+    const { email, password, rememberMe } = this.authData.value;
+    
+    const storageType = rememberMe ? StorageType.Local : StorageType.Session;
+    this.authService.initializeStorage(storageType);
 
-    if (isAuthenticated) {
-      console.log('Login successful');
-      this.ref.close({ email, password });
-      this.router.navigate(['/dashboard']);
-    } else {
-      console.error('Invalid email or password');
-    }
+    this.apiAuthService.loginUser(email, password)
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe({
+      next: ({ token, user }) => {
+        if (token && typeof user?.id === 'number' && typeof user.email === 'string') {
+          this.authService.setToken(token);
+          this.authService.setUser({ id: user.id, email: user.email });
+          this.ref.close();
+          this.router.navigate(['/dashboard']);
+        }
+      },
+      error: (err) => {
+      }
+    });
   }
 
   public openSignUp(): void {
@@ -60,15 +70,15 @@ export class LoginComponent {
       closable: false,
     });
   
-    const subscription = dialogRef.onClose.subscribe((result) => {
+    dialogRef.onClose
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe((result) => {
       if (result) {
-        this.authData.setValue({
+        this.authData.patchValue({
           email: result.email,
           password: result.password,
         });
       }
-  
-      subscription.unsubscribe();
     });
   }
 

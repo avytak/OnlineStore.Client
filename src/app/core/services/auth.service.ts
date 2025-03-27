@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { StorageService } from './storage.service';
+import { StorageType } from '@core/enums/storage-type';
+import { UserInformation } from '@shared/interfaces/user-information';
 
 @Injectable({
   providedIn: 'root'
@@ -7,21 +10,24 @@ export class AuthService {
   private readonly TOKEN_KEY = 'accessToken';
   private readonly USER_KEY = 'user';
 
+  constructor(private storage: StorageService) {
+    this.storage.setType(StorageType.Local);
+  }
+
   public setToken(token: string): void {
-    localStorage.setItem(this.TOKEN_KEY, token);
+    this.storage.set(this.TOKEN_KEY, token);
   }
 
   public getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    return this.storage.get<string>(this.TOKEN_KEY);
   }
 
-  public setUser(user: any): void {
-    localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+  public setUser(user: UserInformation): void {
+    this.storage.set(this.USER_KEY, user);
   }
 
-  public getUser(): any {
-    const user = localStorage.getItem(this.USER_KEY);
-    return user ? JSON.parse(user) : null;
+  public getUser(): UserInformation | null {
+    return this.storage.get<UserInformation>(this.USER_KEY);
   }
 
   public isAuthenticated(): boolean {
@@ -29,7 +35,11 @@ export class AuthService {
   }
 
   public logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.USER_KEY);
+    this.storage.remove(this.TOKEN_KEY);
+    this.storage.remove(this.USER_KEY);
+  }
+
+  public initializeStorage(type: StorageType): void {
+    this.storage.setType(type);
   }
 }

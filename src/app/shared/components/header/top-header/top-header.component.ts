@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ApiAuthService } from '@shared/services/api/api-auth.service';
-import { SignupComponent } from '@features/auth/signup/signup.component';
+import { LoginComponent } from '@features/auth/login/login.component';
 
 @Component({
   selector: 'app-top-header',
@@ -20,7 +20,7 @@ export class TopHeaderComponent {
 
   public openDialog(): void {
     const dialogRef = this.dialogService
-      .open(SignupComponent, {
+      .open(LoginComponent, {
         modal: true,
         closable: true,
       })

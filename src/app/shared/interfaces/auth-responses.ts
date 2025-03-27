@@ -20,10 +20,7 @@ export interface LoginResponse {
   success: boolean;
   message?: string;
   token?: string;
-  user?: {
-    id: number;
-    email: string;
-  };
+  user?: Partial<UserInformation>
 }
 
 export interface AuthenticationData {
@@ -35,4 +32,24 @@ export interface UsersRegistrationData {
   id: number;
   email: string;
   password: string;
+}
+
+export interface VerifyResponse {
+  success: boolean;
+  message?: string;
+  user: UserInformation;
+}
+
+export interface SendTokenResponse {
+  success: boolean;
+  message: string;
+}
+export interface UpdateUserRequest {
+  email?: string;
+  password?: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string;
+  birthDay?: string;
+  phone?: string;
 }
