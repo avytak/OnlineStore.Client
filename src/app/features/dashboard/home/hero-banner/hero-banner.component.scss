@@ -1,0 +1,41 @@
+@import "main";
+
+:host {
+  position: relative;
+}
+.banner {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin: 0 auto;
+  max-width: toRem(1300);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  @include adaptiveValue("padding-left", 85, 20);
+  @include adaptiveValue("padding-bottom", 96, 21);
+  @include adaptiveValue("gap", 20, 8);
+}
+.title-block {
+  gap: toRem(5);
+  .title {
+    color: $textColorLight;
+    @include adaptiveValue("font-size", 40, 24);
+    font-family: $fontHeiti;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  span {
+    font-family: $fontHelvetica-neue;
+    @include adaptiveValue("font-size", 18, 9);
+    line-height: 1.5;
+    color: #e5e5e5;
+    border: 0;
+  }
+}
+.wrapper-info {
+  display: flex;
+  flex-direction: column;
+  gap: toRem(20);
+}

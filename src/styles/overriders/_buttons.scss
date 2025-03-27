@@ -1,0 +1,31 @@
+
+::ng-deep.login-google-btn {
+  font-weight: 400;
+  font-size: toRem(16);
+  line-height: 1.5;
+  background-color: #fff;
+}
+::ng-deep .auth-btn button {
+  --p-button-primary-background: #000;
+  border: 1px solid #000;
+  opacity: 1 !important;
+}
+::ng-deep .login-google-btn span {
+  font-weight: 400;
+  font-size: toRem(16);
+  line-height: 1.5;
+  color: #000;
+  padding-block: toRem(7);
+}
+::ng-deep .p-button-label {
+  font-weight: 500;
+  font-size: toRem(16);
+  color: $textColorLight;
+  border: 0;
+}
+.confirms-block {
+  ::ng-deep button {
+    width: 100%;
+    border-radius: 0;
+  }
+}
