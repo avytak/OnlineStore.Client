@@ -1,0 +1,88 @@
+<div class="wrapper">
+  <app-header [isScrolled]="isScrolled"></app-header>
+  <div class="hero-wrapper">
+    <app-hero-banner></app-hero-banner>
+  </div>
+  <main class="main-container">
+
+    <div class="main-container__block">
+      <div class="main-container__new-in-section">
+        <h3 class="title"><a href="#">New in</a></h3>
+
+        <div class="main-container__catalog-new-product catalog-new-product">
+          <div class="catalog-new-product__card">
+            <a href="#" class="link-women">Women’s</a>
+            <a href="#" class="img-link">
+              <img src="assets/image/new-collection/image1.webp" alt="girl in new collection on the street">
+            </a>
+          </div>
+
+          <div class="catalog-new-product__card">
+            <a href="#" class="link-men">Men`s</a>
+            <a href="#" class="img-link">
+              <img src="assets/image/new-collection/image3.webp" alt="brown jacket">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- brands -->
+    <div class="main-container__block">
+      <div class="main-container__brands brands">
+        <div class="brands__card">
+          <a class="title-link" href="#">Tom Ford</a>
+          <a class="go-to-shop" href="#">Go to shop</a>
+          <div class="wrapper-img">
+            <a href="#" class="img-link">
+              <img src="assets/image/new-collection/image2.webp" alt="fashion show">
+            </a>
+          </div>
+        </div>
+        <div class="brands__card">
+          <a class="title-link" href="#">Prada</a>
+          <a class="go-to-shop" href="#">Go to shop</a>
+          <div class="wrapper-img">
+            <a href="#" class="img-link">
+              <img src="assets/image/new-collection/image4.webp" alt="guy in a stylish shirt and coat">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- bestsellers block -->
+      <div class="main-container__block bestsellers">
+
+        <h3 class="title"><a href="#">Bestseller</a></h3>
+        <div class="main-container__bestsellers-product bestsellers-product">
+          <!-- for her -->
+          <div class="bestsellers-product__card">
+            <a href="#" class="link-women">Women’s</a>
+            <a href="#" class="img-link">
+              <img src="assets/image/bestsellers/womens.webp" alt="pink women's sneakers">
+            </a>
+          </div>
+          <!-- for him -->
+          <div class="bestsellers-product__card">
+            <a href="#" class="link-men">Men`s</a>
+            <a href="#" class="img-link">
+              <img src="assets/image/bestsellers/mens.webp" alt="brown jacket">
+            </a>
+          </div>
+        </div>
+      </div>
+
+<!-- special-sale block -->
+        <div class="main-container__block special-sale">
+          <div class="bg-wrapper">
+          <div class="special-sale__info-block">
+            <h2 class="title">Special offer sale -30%</h2>
+            <app-discover-button></app-discover-button>
+          </div>
+        </div>
+        </div>
+
+
+  </main>
+  <app-footer></app-footer>
+</div>
