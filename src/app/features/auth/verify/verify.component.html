@@ -1,0 +1,5 @@
+<div *ngIf="verificationStatus === 'loading'">Verifying...</div>
+<div *ngIf="verificationStatus !== 'loading'">
+  <p>{{ message }}</p>
+  <button *ngIf="verificationStatus === 'success'" (click)="goToLogin()">Go to Login</button>
+</div>

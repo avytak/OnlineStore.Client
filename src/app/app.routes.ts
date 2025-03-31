@@ -12,6 +12,11 @@ export const routes: Routes = [
       import('./features/dashboard/home/home.component').then(m => m.HomeComponent)
   },
   {
+  path: 'verify',
+  loadComponent: () =>
+    import('./features/auth/verify/verify.component').then(m => m.VerifyComponent),
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./features/auth/login/login.component').then(m => m.LoginComponent)

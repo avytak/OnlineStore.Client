@@ -6,8 +6,8 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { SignupComponent } from '../signup/signup.component';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
-import { ApiAuthService } from '@shared/services/api/api-auth.service';
 import { StorageType } from '@core/enums/storage-type';
+import { ApiAuthService } from '@shared/services/api/api-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +16,9 @@ import { StorageType } from '@core/enums/storage-type';
   standalone: false,
 })
 export class LoginComponent {
-  public isPasswordVisible: boolean = false;
+  public isPasswordVisible = false;
   public authData: FormGroup;
+  public loginErrorMessage: string | null = null;
   public destroyRef = inject(DestroyRef);
 
   constructor(
@@ -37,31 +38,38 @@ export class LoginComponent {
   }
 
   public onSubmit(): void {
+    this.loginErrorMessage = null;
     this.authData.markAllAsTouched();
 
-    if (this.authData.invalid) {
-      return;
-    }
+    if (this.authData.invalid) return;
 
     const { email, password, rememberMe } = this.authData.value;
-    
     const storageType = rememberMe ? StorageType.Local : StorageType.Session;
     this.authService.initializeStorage(storageType);
 
     this.apiAuthService.loginUser(email, password)
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe({
-      next: ({ token, user }) => {
-        if (token && typeof user?.id === 'number' && typeof user.email === 'string') {
-          this.authService.setToken(token);
-          this.authService.setUser({ id: user.id, email: user.email });
-          this.ref.close();
-          this.router.navigate(['/dashboard']);
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: ({ token, user }) => {
+          if (token && user && typeof user.id === 'number' && typeof user.email === 'string') {
+            this.authService.setToken(token);
+            this.authService.setUser({ id: user.id, email: user.email });
+            this.ref.close();
+            this.router.navigate(['/home']);
+          } else {
+            this.loginErrorMessage = 'Invalid response from server.';
+          }
+        },
+        error: (err) => {
+          const errorMessage = err?.error?.message || 'Login failed';
+
+          if (errorMessage.toLowerCase().includes('authorization is not confirmed')) {
+            this.loginErrorMessage = 'Your account is not verified. Please check your email.';
+          } else {
+            this.loginErrorMessage = 'Invalid email or password.';
+          }
         }
-      },
-      error: (err) => {
-      }
-    });
+      });
   }
 
   public openSignUp(): void {
@@ -69,17 +77,17 @@ export class LoginComponent {
       modal: true,
       closable: false,
     });
-  
+
     dialogRef.onClose
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe((result) => {
-      if (result) {
-        this.authData.patchValue({
-          email: result.email,
-          password: result.password,
-        });
-      }
-    });
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (result) {
+          this.authData.patchValue({
+            email: result.email,
+            password: result.password,
+          });
+        }
+      });
   }
 
   public togglePasswordVisibility(): void {

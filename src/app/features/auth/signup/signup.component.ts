@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
 import { inject, DestroyRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { LoginComponent } from '../login/login.component';
 import { ApiAuthService } from '@shared/services/api/api-auth.service';
-import { Observable, map, catchError, of, switchMap } from 'rxjs';
-import { LoginResponse } from '@shared/interfaces/auth-responses';
 import { AuthService } from '@core/services/auth.service';
 import { StorageType } from '@core/enums/storage-type';
-import { AuthType } from '@core/enums/auth-type';
-import { UserInformation } from '@shared/interfaces/user-information';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { PASSWORD_PATTERN } from '@shared/constants/regex.constants';
 
 @Component({
   selector: 'app-signup',
@@ -20,9 +19,10 @@ import { UserInformation } from '@shared/interfaces/user-information';
   providers: [DialogService],
 })
 export class SignupComponent {
-  public isPasswordVisible: boolean = false;
+  public isPasswordVisible = false;
   public authData: FormGroup;
-  public isFormValid: boolean = false;
+  public isFormValid = false;
+  public registrationErrorMessage: string | null = null;
   public destroyRef = inject(DestroyRef);
 
   constructor(
@@ -38,15 +38,8 @@ export class SignupComponent {
   private buildForm(): FormGroup {
     return this.fb.group(
       {
-        email: [null, [Validators.email, Validators.required]],
-        password: [
-          null,
-          [
-            Validators.required,
-            Validators.pattern(`^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$`),
-            Validators.minLength(6),
-          ],
-        ],
+        email: [null, [Validators.required, Validators.email]],
+        password: [null, [Validators.required, Validators.pattern(PASSWORD_PATTERN), Validators.minLength(6)]],
         rePassword: [null, [Validators.required]],
         rememberMe: [false],
       },
@@ -54,88 +47,56 @@ export class SignupComponent {
     );
   }
 
-  public passwordsMatchValidator( control: AbstractControl): ValidationErrors | null {
-    const passwordControl = control.get('password')?.value;
-    const rePasswordControl = control.get('rePassword')?.value;
-
-    return passwordControl !== rePasswordControl ? { passwordsNotMatch: true } : null;
+  private passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password')?.value;
+    const rePassword = control.get('rePassword')?.value;
+    return password !== rePassword ? { passwordsNotMatch: true } : null;
   }
 
   public checkFormValidity(): void {
     this.isFormValid = this.authData.valid;
   }
 
-  public register(
-    authType: AuthType,
-    credentials: { email: string; password: string }
-  ): Observable<{ success: boolean; message: string }> {
-    const { email, password } = credentials;
-  
-    if (authType === AuthType.LogIn) {
-      return this.apiAuthService.loginUser(email, password).pipe(
-        map((res: LoginResponse) => {
-          const user = res.user;
-          if (
-            res.token &&
-            user &&
-            typeof user.id === 'number' &&
-            typeof user.email === 'string'
-          ) {
-            this.authService.setToken(res.token);
-            this.authService.setUser({
-              id: user.id,
-              email: user.email,
-            });
-            return { success: true, message: 'Login successful' };
-          }
-          return { success: false, message: res.message || 'Login error' };
-        }),
-        catchError(() =>
-          of({ success: false, message: 'Invalid email or password' })
-        )
-      );
-    }
-  
-    if (authType === AuthType.SignUp) {
-      return this.apiAuthService.registerUser(email, password).pipe(
-        map((user: UserInformation) => {
-          if (typeof user.id === 'number' && typeof user.email === 'string') {
-            this.authService.setUser({ id: user.id, email: user.email });
-            return { success: true, message: 'Registration successful' };
-          }
-          return { success: false, message: 'Invalid registration response' };
-        }),
-        catchError((err) => {
-          const message = err?.error?.message || 'Registration request failed';
-          return of({ success: false, message });
-        })
-      );
-    }
-  
-    return of({ success: false, message: 'Unknown authorization type' });
-  }
-
-
   public onSubmit(): void {
     this.authData.markAllAsTouched();
+    if (this.authData.invalid) return;
 
-    if (this.authData.invalid) {
-      return;
-    }
+    this.registrationErrorMessage = null;
 
     const { email, password, rememberMe } = this.authData.value;
     const storageType = rememberMe ? StorageType.Local : StorageType.Session;
     this.authService.initializeStorage(storageType);
 
-    this.register(AuthType.SignUp, { email, password })
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe(
-      (result) => {
+    this.apiAuthService.registerUser(email, password)
+      .pipe(
+        map(() => ({
+          success: true,
+          message: 'Registration successful. Please check your email to confirm your account.',
+        })),
+        catchError((err) => {
+          let message = 'Registration failed.';
+
+          if (err?.error?.message?.includes('already exists')) {
+            message = 'This email is already registered.';
+          } else if (err?.error?.message?.includes('invalid email')) {
+            message = 'Please enter a valid email address.';
+          } else if (err?.status === 400) {
+            message = 'Invalid registration data.';
+          } else if (err?.status === 0) {
+            message = 'No connection to the server.';
+          }
+
+          return of({ success: false, message });
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((result) => {
         if (result.success) {
           this.ref.close({ email, password });
+        } else {
+          this.registrationErrorMessage = result.message;
         }
-      }
-    );
+      });
   }
 
   public openLogIn(): void {
@@ -145,17 +106,17 @@ export class SignupComponent {
     });
 
     dialogRef.onClose
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe((result) => {
-      if (result) {
-        this.authData.setValue({
-          email: result.email,
-          password: result.password,
-          rememberMe: false,
-        });
-      }
-      this.ref.close();
-    });
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (result) {
+          this.authData.setValue({
+            email: result.email,
+            password: result.password,
+            rememberMe: false,
+          });
+        }
+        this.ref.close();
+      });
   }
 
   public togglePasswordVisibility(): void {
