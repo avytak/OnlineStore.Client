@@ -17,6 +17,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "optimization": true,
+            "sourceMap": false,
             "outputPath": "dist/online-store",
             "index": "src/index.html",
             "browser": "src/main.ts",
