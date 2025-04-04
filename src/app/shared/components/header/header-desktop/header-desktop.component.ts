@@ -1,21 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
-import { ApiAuthService } from '@shared/services/api/api-auth.service';
+import { UiKitModule } from '@shared/ui-kit/ui-kit.module';
 import { LoginComponent } from '@features/auth/login/login.component';
+import { ApiAuthService } from '@shared/services/api/api-auth.service';
+import { DESKTOP_MENU_ITEMS, GENDER_LINKS } from '@shared/constants/app-routing.constants';
+import { MenuItem } from 'primeng/api';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-top-header',
-  imports: [],
-  templateUrl: './top-header.component.html',
-  styleUrl: './top-header.component.scss',
-  providers: [DialogService],
+  selector: 'app-header-desktop',
+  imports: [UiKitModule, RouterModule],
+  templateUrl: './header-desktop.component.html',
+  styleUrl: './header-desktop.component.scss'
 })
-export class TopHeaderComponent {
+export class HeaderDesktopComponent implements OnInit {
+  @Input() scrolled: boolean = false;
+
+  public menuItems: MenuItem[] = [];
+  public genderLinks = GENDER_LINKS;
+
   constructor(
     private dialogService: DialogService,
     private apiAuth: ApiAuthService
-  ) {
-    // this.openDialog();
+  ) {}
+
+  ngOnInit() {
+    this.menuItems = DESKTOP_MENU_ITEMS
   }
 
   public openDialog(): void {
@@ -38,4 +48,9 @@ export class TopHeaderComponent {
         }
       });
   }
+
+  public openBasket() {
+    console.log('Open basket');
+  }
 }
+

@@ -59,6 +59,9 @@
     border-start-start-radius: 0;
     border-end-start-radius: 0;
   }
+  .p-inputgroup > .p-component {
+    border-inline-end: 0;
+  }
 }
 .footer-line {
   width: 100%;
@@ -119,6 +122,7 @@
 .list-of-service {
   width: 100%;
   margin: 0 auto;
+  @include adaptiveValue('padding-inline', 20, 10);
 }
 .card {
   .p-accordionpanel > .p-accordionheader {
@@ -170,4 +174,7 @@
     display: inline-block;
     vertical-align: middle;
   }
+}
+.list-of-service__accordion {
+display: block !important;
 }

@@ -1,0 +1,141 @@
+::ng-deep .p-dialog {
+  @media (max-width: toEm(1100)) {
+    width: 50% !important;
+  }
+  @media (max-width: toEm(750)) {
+    width: 60% !important;
+  }
+  @media (max-width: toEm(600)) {
+    width: 80% !important;
+  }
+  @media (max-width: toEm(400)) {
+    width: 90% !important;
+  }
+}
+::ng-deep .auth-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include adaptiveValue("gap", 20, 5);
+  font-family: $fontHelvetica-neue;
+  max-width: toRem(475);
+  // min-width: toRem(300);
+  &__form {
+    width: 100%;
+  }
+}
+::ng-deep .form-wrap {
+  @include adaptiveValue("gap", 30, 10);
+  width: 100%;
+}
+::ng-deep .p-dialog-content {
+  @include adaptiveValue("width", 475, 300);
+  width: 100% !important;
+  // overflow-y: hidden;
+  padding: 0;
+}
+::ng-deep .confirms-block {
+  width: 100%;
+}
+::ng-deep .pi-eye,
+::ng-deep .pi-eye-slash {
+  position: absolute;
+  top: 50%;
+  right: toRem(12);
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+::ng-deep .auth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $backgroundDarc;
+}
+::ng-deep .p-dialog-close-button svg {
+  width: toRem(24);
+  height: toRem(24);
+  color: $textBlack;
+}
+::ng-deep .dialog-title {
+  margin: 0 auto;
+  font-family: $fontHeiti;
+  font-weight: 400;
+  @include adaptiveValue("font-size", 34, 20);
+  line-height: 1.5;
+  color: $textBlack;
+}
+::ng-deep .dialog-input::placeholder {
+  color: $placeholder;
+  font-family: $fontInter;
+  font-weight: 400;
+  @include adaptiveValue("font-size", 14, 10);
+  line-height: 2.4;
+}
+::ng-deep .dialog-input {
+  @include adaptiveValue("padding", 8, 4);
+  font-family: $fontHeiti;
+  color: $textBlack !important;
+  @include adaptiveValue("font-size", 18, 14);
+  line-height: 1.5;
+  border: toRem(1) solid $borderColorInput;
+}
+::ng-deep .dialog-label {
+  font-family: $fontHeiti;
+  color: $textBlack !important;
+  @include adaptiveValue("font-size", 18, 14);
+  line-height: 1.5;
+}
+::ng-deep .dialog-input {
+  position: relative !important;
+}
+
+::ng-deep .text-primary {
+  color: $textColorDark !important;
+}
+::ng-deep .additional-info-bottom__login {
+  text-decoration: underline;
+}
+::ng-deep .additional-info-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include adaptiveValue('font-size', 14, 12);
+  font-family: $fontHelvetica-neue;
+  font-weight: 400;
+  line-height: 1.5;
+  gap: toRem(20);
+}
+::ng-deep .additional-info-bottom__login {
+
+    text-decoration: underline !important;
+
+}
+::ng-deep .reminder-data {
+  display: flex;
+  max-width: toRem(123);
+  align-items: center;
+  gap: toRem(4);
+  justify-content: space-between;
+
+  label {
+    white-space: nowrap;
+  }
+
+  .remember-me {
+    width: toRem(12.75);
+    height: toRem(12.75);
+  }
+}
+::ng-deep .p-message-text {
+  font-size: toRem(10) !important;
+}
+::ng-deep .reminder-top {
+  font-weight: 400;
+  font-size: toRem(12);
+  gap: toRem(10);
+  width: 100%;
+}
+::ng-deep .forgotten-password {
+  text-decoration: underline;
+  max-width: toRem(120);
+}

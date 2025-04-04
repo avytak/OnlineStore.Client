@@ -1,0 +1,40 @@
+<div class="wrapper" [class.scrolled]="scrolled">
+    <div class="top-block">
+      <div class="users-gender">
+          <a [routerLink]="genderLinks.forHer.url" class="gender-link">{{ genderLinks.forHer.label }}</a>
+          <a [routerLink]="genderLinks.forHim.url" class="gender-link">{{ genderLinks.forHim.label }}</a>
+        </div>
+
+
+      <div class="logo">
+        <h2>DRESSIFY</h2>
+      </div>
+
+      <div class="user-actions">
+        <div class="authorization" (click)="openDialog()">
+          <span class="pi pi-user"></span>
+        </div>
+        <div cla3ss="favorites">
+          <span class="pi pi-heart"></span>
+        </div>
+        <div class="basket" (click)="openBasket()">
+          <img class="basket-svg" src="../../../../assets/icons/basket.svg" alt="basket svg" />
+        </div>
+      </div>
+    </div>
+
+    <!-- bottom block -->
+    <div class="bottom-block">
+      <p-menubar class="meni-list" [model]="menuItems"/>
+
+      <div class="search-block">
+        <p-inputgroup class="search-block__input">
+          <input pInputText placeholder="Search on the site" />
+          <p-inputgroup-addon>
+            <p-button icon="pi pi-search pi-search-icon"></p-button>
+          </p-inputgroup-addon>
+        </p-inputgroup>
+      </div>
+    </div>
+  </div>
+

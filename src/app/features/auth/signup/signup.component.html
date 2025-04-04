@@ -1,13 +1,14 @@
-<div class="title">Sign Up</div>
+<div class="auth-block">
+<div class="dialog-title">Sign Up</div>
 
-<form [formGroup]="authData" class="flex flex-column align-items-center gap-2 mt-2 w-full">
+<form [formGroup]="authData" class="flex flex-column align-items-center mt-2 auth-block__form">
   <p-message *ngIf="registrationErrorMessage" severity="error" [text]="registrationErrorMessage"></p-message>
-
+  <div class="form-wrap">
   <!-- Email -->
-  <div class="card p-1 w-full md:w-25rem">
-    <div class="flex flex-column gap-2">
-      <label for="useremail">Email</label>
-      <input pInputText id="useremail" formControlName="email" placeholder="lanaluk1977@gmail.com" />
+  <div class="card p-1">
+    <div class="flex flex-column gap-1">
+      <label class="dialog-label" for="useremail">Email</label>
+      <input class="dialog-input" pInputText id="useremail" formControlName="email" placeholder="lanaluk1977@gmail.com" />
       <p-message *ngIf="authData.get('email')?.hasError('email')" severity="error" variant="simple">
         Incorrect email
       </p-message>
@@ -15,60 +16,78 @@
   </div>
 
   <!-- Password -->
-  <div class="card p-1 w-full md:w-25rem">
-    <div class="flex flex-column gap-2 relative">
-      <label for="userpassword">Password</label>
-      <div class="flex align-items-center gap-2">
+  <div class="card p-1">
+    <div class="flex flex-column gap-1 relative">
+      <label class="dialog-label" for="userpassword">Password</label>
+      <div class="flex align-items-center gap-1 relative">
         <input [type]="isPasswordVisible ? 'text' : 'password'" pInputText id="userpassword" formControlName="password"
-          placeholder="Enter your password" class="flex-1 pr-4" />
-        <i class="pi absolute pi-eye" [ngClass]="isPasswordVisible ? 'pi-eye-slash' : 'pi-eye'"
-          (click)="togglePasswordVisibility()"></i>
+          placeholder="ХХХХХХ" class="flex-1 pr-4 dialog-input" />
+          <i class="pi" [class.pi-eye-slash]="isPasswordVisible" [class.pi-eye]="!isPasswordVisible" (click)="togglePasswordVisibility()"></i>
       </div>
-      <p-message *ngIf="authData.hasError('passwordsNotMatch')" severity="error" variant="simple">
-        Password must contain numbers, symbols, uppercase and lowercase letters
+      <p-message *ngIf="authData.get('password')?.touched && authData.get('password')?.hasError('pattern')" severity="error" variant="simple">
+        Password must contain numbers, uppercase, and lowercase letters
       </p-message>
+
     </div>
   </div>
 
   <!-- Re-enter Password -->
-  <div class="card p-1 w-full md:w-25rem">
-    <div class="flex flex-column gap-2 relative">
-      <label for="repassword">Re-enter Password</label>
-      <div class="flex align-items-center gap-2">
+  <div class="card p-1">
+    <div class="flex flex-column gap-1 relative">
+      <label class="dialog-label" for="repassword">Re-password</label>
+      <div class="flex align-items-center gap-1 relative">
         <input [type]="isPasswordVisible ? 'text' : 'password'" pInputText id="repassword" formControlName="rePassword"
-          placeholder="Repeat password" class="flex-1 pr-4" />
-        <i class="pi absolute pi-eye" [ngClass]="isPasswordVisible ? 'pi-eye-slash' : 'pi-eye'"
-          (click)="togglePasswordVisibility()"></i>
+          placeholder="ХХХХХХ" class="flex-1 pr-4 dialog-input" />
+          <i class="pi" [class.pi-eye-slash]="isPasswordVisible" [class.pi-eye]="!isPasswordVisible" (click)="togglePasswordVisibility()"></i>
       </div>
-      <p-message *ngIf="authData.hasError('passwordsNotMatch')" severity="error" variant="simple">
+      <p-message *ngIf="authData.get('rePassword')?.touched && authData.get('rePassword')?.hasError('passwordsNotMatch')" severity="error" variant="simple">
         Passwords do not match
       </p-message>
     </div>
   </div>
 
-  <!-- Top block -->
-  <div class="flex justify-content-between align-items-center w-full md:w-25rem text-xs mt-3 reminder-top">
+  <!-- forgotten-remember block -->
+  <div class="flex justify-content-between align-items-center text-xs mt-3 reminder-top">
     <a href="#" class="forgotten-password">Forgotten password?</a>
-    <div class="flex align-items-center gap-1 reminder-data">
-      <input id="rememberme" type="checkbox" formControlName="rememberMe" />
-      <label for="rememberme">Remember me</label>
+    <div class="flex align-items-center gap-1 reminder-data rememberme-block">
+      <p-checkbox class="input-cheked" formControlName="rememberMe" id="rememberme" [binary]="true" />
+      <label class="label-rememberme" for="rememberme">Remember me</label>
     </div>
   </div>
-</form>
+
 <!-- Action block -->
-<div class="flex flex-column align-items-center gap-4 mt-4 w-full additional-info">
+<div class="flex flex-column align-items-center gap-4 mt-4 additional-info">
 
-  <div class="card p-4 w-full md:w-25rem flex flex-column gap-3 confirms-block">
-    <p-button (click)="onSubmit()" class="auth-btn" label="Sign Up" [disabled]="!authData.valid"></p-button>
+  <div class="card w-full md:w-25rem flex flex-column gap-3 confirms-block">
+    <p-button
+    (click)="onSubmit()"
+    class="auth-btn"
+    label="Sign Up"
+    [disabled]="!authData.get('email')?.valid
+      || authData.get('password')?.invalid
+      || authData.get('rePassword')?.invalid"
+    [loading]="loading"
+    (onClick)="load()">
+    </p-button>
 
-    <p-button severity="secondary" [link]="true" class="login-google-btn" label="Log in with Google"
-      variant="outlined"></p-button>
+    <p-button
+    severity="secondary"
+    [link]="true"
+    class="login-google-btn"
+    label="Sign up with Google"
+    variant="outlined"
+  ></p-button>
 
-    <a href="#" class="login-as-guest">Log in as a guest</a>
-  </div>
-
+    </div>
+    <!-- By clicking on the ‘Register’ -->
+    <div class="privat-policy">
+      <a href="#">By clicking on the ‘Register’ button, you agree to the terms and conditions of the publication ‘About the Public’, agree to the privacy policy.</a>
+    </div>
   <div class="text-center flex align-items-center gap-2 additional-info-bottom">
-    <span>Don’t have an account?</span>
+    <a href="#">Don’t have an account?</a>
     <a class="additional-info-bottom__login font-medium text-primary cursor-pointer" (click)="openLogIn()">Log In</a>
   </div>
+</div>
+  </div>
+</form>
 </div>

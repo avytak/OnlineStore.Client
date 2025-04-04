@@ -1,23 +1,30 @@
 @import "main";
 
-.discover-link {
-  ::ng-deep.p-button-link {
-    background-color: $textColorLight;
-    span {
-      white-space: nowrap;
-      font-weight: 500;
-      @include adaptiveValue("font-size", 16, 10);
-      color: $textColorDark;
-      padding: 0;
-      font-family: $fontHelvetica-neue;
-    }
+.discover-btn {
+  cursor: pointer;
+  background-color: $textColorLight;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all ease 0.3s;
+
+  &:hover {
+    background-color: $hoverBtnLight;
+    transition: all ease 0.3s;
+  }
+  &:active {
+    background-color: $clickBtnLight;
+    transition: all ease 0.3s;
   }
 }
-
+.discover-link {
+  color: $textColorDark;
+  font-family: $fontHelvetica-neue;
+  @include adaptiveValue("font-size", 16, 12);
+  white-space: nowrap;
+  font-weight: 500;
+}
 .card {
   @include adaptiveValue("width", 286, 144);
   @include adaptiveValue("height", 58, 30);
-}
-::ng-deep .p-button {
-border-radius: 0 !important;
 }

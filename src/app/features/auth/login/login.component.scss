@@ -1,49 +1,17 @@
 @import "main";
 
-:host {
-  display: flex;
-  flex-direction: column;
-  gap: toRem(20);
-  font-family: $fontHelvetica-neue;
-}
-
-.title {
-  margin: 0 auto;
-  font-family: $fontHeiti;
-  font-weight: 400;
-  font-size: toRem(34);
-  line-height: 1.5;
-}
-.forggoten-password {
-  text-decoration: underline;
-  max-width: toRem(120);
-}
-
 .login-as-guest {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   margin: 0 auto;
   background-color: #fff;
   font-weight: 400;
   font-size: toRem(14);
   line-height: 1.5;
+  font-family: $fontHelvetica-neue;
   text-decoration: underline;
-}
-
-.additional-info-bottom__sigin {
-  text-decoration: underline;
-}
-.reminder-data {
-  display: flex;
-  max-width: toRem(123);
-  align-items: center;
-  gap: toRem(4);
-  justify-content: space-between;
-
-  label {
-    white-space: nowrap;
-  }
-
-  .remember-me {
-    width: toRem(12.75);
-    height: toRem(12.75);
-  }
+  @include adaptiveValue('margin-bottom', 150, 80);
+  @include adaptiveValue('margin-top', 30, 15);
 }
