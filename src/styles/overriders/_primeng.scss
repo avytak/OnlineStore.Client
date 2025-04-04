@@ -1,0 +1,67 @@
+::ng-deep .p-button:not(:disabled):hover {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+::ng-deep .pi-search {
+  padding: 0;
+  @include adaptiveValue("font-size", 24, 20);
+  opacity: 0.9;
+  border: 0;
+}
+::ng-deep .pi-bars {
+  padding: 0;
+  @include adaptiveValue("font-size", 30, 20);
+  opacity: 0.9;
+  border: 0;
+}
+::ng-deep .discover-link {
+  &:focus,
+  &:active,
+  &:visited,
+  &:hover {
+    color: $textColorDark !important;
+  }
+}
+::ng-deep .pi-search-icon::before {
+  color: $textColorLight;
+  width: toRem(20) !important;
+  height: toRem(20);
+}
+::ng-deep .scrolled .pi-search-icon::before {
+  filter: invert(100%);
+}
+::ng-deep .p-button-icon-only {
+  transform-origin: center center;
+  transition: all ease 0.4s;
+
+  &:hover {
+    transform: scale(1.09);
+    transition: all ease 0.3s;
+  }
+}
+
+::ng-deep .p-checkbox-box {
+  border-radius: 0 !important;
+  width: toRem(17) !important;
+  height: toRem(17) !important;
+}
+::ng-deep .p-checkbox {
+  width: toRem(17) !important;
+  height: toRem(17) !important;
+}
+
+::ng-deep .p-checkbox-checked .p-checkbox-box {
+  border-color: $clickBtnDark !important;
+  background-color: $backgroundDarc !important;
+  border-radius: 0;
+  width: toRem(17);
+  height: toRem(17);
+}
+::ng-deep .label-rememberme,
+::ng-deep .forgotten-password {
+  font-family: $fontInter;
+  @include adaptiveValue("font-size", 12, 10);
+}
+::ng-deep .forgotten-password {
+  text-decoration: underline !important;
+}

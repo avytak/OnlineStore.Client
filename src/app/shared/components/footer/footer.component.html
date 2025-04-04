@@ -1,0 +1,8 @@
+<footer class="footer">
+  <div *ngIf="isDesktop" class="desktop-footer">
+    <app-footer-desktop></app-footer-desktop>
+  </div>
+  <div *ngIf="!isDesktop" class="mobile-footer">
+    <app-footer-mobile></app-footer-mobile>
+  </div>
+</footer>

@@ -1,0 +1,144 @@
+@import "main";
+
+.top-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  padding-right: toRem(5);
+}
+
+.users-gender {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include adaptiveValue("font-size", 24, 8);
+  flex-shrink: 0;
+  @include adaptiveValue("gap", 20, 5);
+  font-family: $fontSora;
+}
+h2 {
+  @include adaptiveValue("font-size", 36, 16);
+  line-height: 1.8;
+  font-family: $fontSora;
+}
+.gender-link {
+  position: relative;
+  background: linear-gradient(to left, transparent 50%, $textColorLight 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  text-decoration: none;
+  padding: 0 toRem(5);
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: $backgroundDarc;
+    transition: all 0.5s ease;
+    background-position: left bottom;
+  }
+
+  &:focus {
+    color: $backgroundDarc;
+    background-color: $backgroundColorLight;
+  }
+}
+.scrolled .gender-link {
+  position: relative;
+      background: linear-gradient(to left, transparent 50%, $textColorDark 50%);
+      background-size: 200% 100%;
+      background-position: right bottom;
+      text-decoration: none;
+      padding: 0 toRem(5);
+      transition: background-position 0.3s ease;
+
+      &:hover {
+        color: $backgroundColorLight;
+        transition: background-position 0.5s ease;
+        background-position: left bottom;
+      }
+
+      &:focus {
+        color: $backgroundColorLight;
+        background-color: $backgroundDarc;
+      }
+}
+.user-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include adaptiveValue("gap", 25, 5);
+}
+.basket {
+  @include adaptiveValue("width", 24, 15);
+  @include adaptiveValue("height", 24, 15);
+}
+.basket-svg {
+  cursor: pointer;
+  width: 100%;
+  transform-origin: center center;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.09);
+    transition: all ease 0.3s;
+  }
+}
+.pi-user,
+.pi-heart {
+  cursor: pointer;
+  @include adaptiveValue("font-size", 24, 15);
+  border: 0;
+  transform-origin: center center;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.09);
+    transition: all ease 0.3s;
+  }
+}
+.scrolled .basket-svg {
+  filter: invert(100%);
+}
+.bottom-block {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: toRem(2);
+}
+.bottom-header-nav {
+  max-width: toRem(775);
+  width: 100%;
+}
+.search-block {
+  border: toRem(0.5) solid $textColorLight;
+  border-radius: toRem(6);
+
+  .search-block__input {
+    max-width: toRem(370);
+    font-family: $fontHelvetica-neue;
+    @include adaptiveValue("font-size", 16, 8);
+
+    input {
+      box-shadow: none;
+    }
+
+    input::placeholder {
+      color: $textColorLight;
+    }
+    input,
+    p-inputgroup-addon {
+      background: transparent;
+      border: 0;
+    }
+
+    .p-button-secondary {
+      &::before {
+        color: $textColorLight !important;
+      }
+    }
+  }
+}
+.scrolled .p-inputgroup input::placeholder {
+  color: $textColorDark;
+}

@@ -1,0 +1,17 @@
+@import "main";
+
+.login-as-guest {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 auto;
+  background-color: #fff;
+  font-weight: 400;
+  font-size: toRem(14);
+  line-height: 1.5;
+  font-family: $fontHelvetica-neue;
+  text-decoration: underline;
+  @include adaptiveValue('margin-bottom', 150, 80);
+  @include adaptiveValue('margin-top', 30, 15);
+}

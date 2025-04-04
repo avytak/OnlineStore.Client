@@ -1,0 +1,13 @@
+@import "main";
+
+.privat-policy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+@include adaptiveValue('margin-top', 100, 40);
+@include adaptiveValue('font-size', 10, 7);
+font-family: $fontInter;
+font-weight: 400;
+line-height: 1.6;
+text-align: center;
+}

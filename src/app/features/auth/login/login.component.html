@@ -1,1 +1,105 @@
-<p>login works!</p>
+<div class="auth-block">
+<div class="dialog-title">Log In</div>
+
+<form [formGroup]="authData" (ngSubmit)="onSubmit()" class="flex flex-column align-items-center mt-2 auth-block__form">
+  <div class="form-wrap">
+  <!-- Email -->
+  <p-message
+  *ngIf="loginErrorMessage"
+  severity="error"
+  variant="text"
+>
+  {{ loginErrorMessage }}
+</p-message>
+  <div class="card p-1">
+    <div class="flex flex-column gap-1">
+      <label class="dialog-label" for="email">E-mail</label>
+      <input
+        pInputText
+        id="email"
+        formControlName="email"
+        placeholder="lanaluk1977@gmail.com"
+        aria-describedby="email-help"
+        autocomplete="email"
+        class="dialog-input"
+      />
+      <p-message
+        *ngIf="authData.get('email')?.invalid && authData.get('email')?.touched"
+        severity="error"
+        variant="simple"
+      >
+        Please enter a valid email.
+      </p-message>
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="card p-1">
+    <div class="flex flex-column gap-1 relative">
+      <label class="dialog-label" for="password">Password</label>
+      <div class="flex align-items-center gap-1 relative">
+        <input
+          [type]="isPasswordVisible ? 'text' : 'password'"
+          pInputText
+          id="password"
+          formControlName="password"
+          placeholder="ХХХХХХ"
+          autocomplete="password"
+          class="flex-1 pr-4 dialog-input"
+        />
+        <i class="pi" [class.pi-eye-slash]="isPasswordVisible" [class.pi-eye]="!isPasswordVisible" (click)="togglePasswordVisibility()"></i>
+      </div>
+      <p-message
+        *ngIf="authData.get('password')?.invalid && authData.get('password')?.touched"
+        severity="error"
+        variant="simple"
+      >
+        Password is required.
+      </p-message>
+    </div>
+  </div>
+
+<!-- forgotten-remember block -->
+<div class="flex justify-content-between align-items-center text-xs mt-3 reminder-top">
+  <a href="#" class="forgotten-password">Forgotten password?</a>
+  <div class="flex align-items-center gap-1 reminder-data rememberme-block">
+      <p-checkbox class="input-cheked" formControlName="rememberMe" id="rememberme" [binary]="true" />
+    <label class="label-rememberme" for="rememberme">Remember me</label>
+  </div>
+</div>
+
+<!-- Action block -->
+<div class="flex flex-column align-items-center gap-4 mt-4 additional-info">
+
+  <!-- Log In + Google -->
+  <div class="card flex flex-column gap-3 confirms-block">
+    <p-button
+      type="submit"
+      label="Log In"
+      class="auth-btn"
+      [disabled]="authData.invalid"
+      [loading]="loading" (onClick)="load()"
+    ></p-button>
+
+    <p-button
+      severity="secondary"
+      [link]="true"
+      class="login-google-btn"
+      label="Sign up with Google"
+      variant="outlined"
+    ></p-button>
+  </div>
+</div>
+
+  <!-- Login as guest -->
+  <div class="login-as-guest">
+    <a href="#">Log in as a guest</a>
+  </div>
+  <!-- Bottom: Sign Up -->
+  <div class="text-center flex align-items-center gap-2 additional-info-bottom">
+    <a href="#">Don’t have an account?</a>
+    <a class="additional-info-bottom__login font-medium text-primary cursor-pointer" (click)="openSignUp()">Sign Up</a>
+  </div>
+</div>
+</form>
+</div>

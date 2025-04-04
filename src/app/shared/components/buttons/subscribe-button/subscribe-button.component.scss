@@ -1,0 +1,32 @@
+@import "main";
+
+.subscribe {
+  border: toRem(1) solid $textColorDark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: $backgroundColorLight;
+  transition: all ease 0.3s;
+
+  @media (max-width: toEm(640)) {
+    border-color: $textColorLight;
+    color: $textColorLight;
+  }
+
+  &:hover {
+    background-color: $hoverBtnLight;
+    transition: all ease 0.4s;
+  }
+  &:active {
+    background-color: $clickBtnLight;
+    transition: all ease 0.3s;
+  }
+}
+
+::ng-deep .p-button-label {
+  line-height: 1.5;
+  @include adaptiveValue("padding-block", 14, 6);
+  color: $textColorDark;
+  font-family: $fontHelvetica-neue;
+}
