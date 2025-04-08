@@ -50,3 +50,7 @@
 .scrolled .p-button-icon {
   color: $textColorDark !important;
 }
+
+::ng-deep .p-menubar-item.p-focus > .p-menubar-item-content {
+background: transparent !important;
+}

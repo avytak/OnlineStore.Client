@@ -1,4 +1,4 @@
-import { Component, DestroyRef, HostListener, inject } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, HostListener, inject } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -15,19 +15,23 @@ import { HeaderMobileComponent } from "./header-mobile/header-mobile.component";
   styleUrls: ['./header.component.scss'],
   providers: [DialogService],
 })
-export class HeaderComponent {
-  public isScrolled: boolean = false;
-  public isDesktop: boolean = true;
+export class HeaderComponent implements AfterViewInit {
+  public isScrolled = false;
+  public isDesktop = true;
+  private destroyRef = inject(DestroyRef);
 
-  constructor(
-    private breakpointObserver: BreakpointObserver
-  ) {}
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
-  ngOnInit() {
-    this.breakpointObserver.observe(['(min-width: 990px)'])
-    .pipe(takeUntilDestroyed(inject(DestroyRef)))
-    .subscribe((result: BreakpointState) => {
-      this.isDesktop = result.matches;
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.onWindowScroll();
+
+      this.breakpointObserver
+        .observe(['(min-width: 990px)'])
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((result: BreakpointState) => {
+          this.isDesktop = result.matches;
+        });
     });
   }
 
