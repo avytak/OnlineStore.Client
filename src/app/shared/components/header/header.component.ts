@@ -1,11 +1,12 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, DestroyRef, HostListener, inject } from '@angular/core';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UiKitModule } from '@shared/ui-kit/ui-kit.module';
 import { HeaderDesktopComponent } from "./header-desktop/header-desktop.component";
 import { HeaderMobileComponent } from "./header-mobile/header-mobile.component";
-import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-header',
@@ -23,12 +24,10 @@ export class HeaderComponent {
   ) {}
 
   ngOnInit() {
-    this.breakpointObserver.observe(['(min-width: 990px)']).subscribe(result => {
-      if (result.matches) {
-        this.isDesktop = true;
-      } else {
-        this.isDesktop = false;
-      }
+    this.breakpointObserver.observe(['(min-width: 990px)'])
+    .pipe(takeUntilDestroyed(inject(DestroyRef)))
+    .subscribe((result: BreakpointState) => {
+      this.isDesktop = result.matches;
     });
   }
 

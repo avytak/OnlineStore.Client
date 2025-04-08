@@ -66,8 +66,7 @@
     [disabled]="!authData.get('email')?.valid
       || authData.get('password')?.invalid
       || authData.get('rePassword')?.invalid"
-    [loading]="loading"
-    (onClick)="load()">
+    [loading]="loading">
     </p-button>
 
     <p-button

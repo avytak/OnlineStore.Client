@@ -6,6 +6,8 @@ import { ApiAuthService } from '@shared/services/api/api-auth.service';
 import { DESKTOP_MENU_ITEMS, GENDER_LINKS } from '@shared/constants/app-routing.constants';
 import { MenuItem } from 'primeng/api';
 import { RouterModule } from '@angular/router';
+import { inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-header-desktop',
@@ -18,6 +20,7 @@ export class HeaderDesktopComponent implements OnInit {
 
   public menuItems: MenuItem[] = [];
   public genderLinks = GENDER_LINKS;
+  public destroyRef = inject(DestroyRef);
 
   constructor(
     private dialogService: DialogService,
@@ -34,7 +37,9 @@ export class HeaderDesktopComponent implements OnInit {
         modal: true,
         closable: true,
       })
-      .onClose.subscribe((result) => {
+      .onClose
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
         if (result) {
           const { email, password } = result;
           this.apiAuth.registerUser(email, password).subscribe({

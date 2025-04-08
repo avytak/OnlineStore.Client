@@ -36,14 +36,6 @@ export class SignupComponent {
     this.authData = this.buildForm();
   }
 
-  load() {
-    this.loading = true;
-
-    setTimeout(() => {
-        this.loading = false
-      }, 2000);
-  }
-
   private buildForm(): FormGroup {
     return this.fb.group(
       {
@@ -86,6 +78,8 @@ export class SignupComponent {
       return;
     }
 
+    this.loading = true;
+
     const { email, password, rememberMe } = this.authData.value;
     const storageType = rememberMe ? StorageType.Local : StorageType.Session;
     this.authService.initializeStorage(storageType);
@@ -114,6 +108,8 @@ export class SignupComponent {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((result) => {
+        this.loading = false;
+        
         if (result.success) {
           this.ref.close({ email, password });
         } else {

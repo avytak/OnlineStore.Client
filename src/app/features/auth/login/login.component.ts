@@ -38,18 +38,13 @@ export class LoginComponent {
     });
   }
 
-  load() {
-    this.loading = true;
-
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
-  }
   public onSubmit(): void {
     this.loginErrorMessage = null;
     this.authData.markAllAsTouched();
 
     if (this.authData.invalid) return;
+
+    this.loading = true;
 
     const { email, password, rememberMe } = this.authData.value;
     const storageType = rememberMe ? StorageType.Local : StorageType.Session;
@@ -60,6 +55,8 @@ export class LoginComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: ({ token, user }) => {
+          this.loading = false;
+
           if (
             token &&
             user &&
@@ -75,6 +72,7 @@ export class LoginComponent {
           }
         },
         error: (err) => {
+          this.loading = false;
           const errorMessage = err?.error?.message || 'Login failed';
 
           if (
