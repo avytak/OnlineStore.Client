@@ -90,6 +90,8 @@ export class LoginComponent {
   }
 
   public openSignUp(): void {
+    this.ref.close();
+
     const dialogRef = this.dialogService.open(SignupComponent, {
       modal: true,
       closable: true,
