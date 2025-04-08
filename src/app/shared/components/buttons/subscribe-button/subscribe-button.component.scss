@@ -1,0 +1,53 @@
+@import "main";
+::ng-deep button {
+  width: 100%;
+}
+::ng-deep .subscribe-btn {
+  border-color: $textColorDark !important;
+  color: $textColorDark !important;
+}
+::ng-deep .p-button-outlined {
+  padding-block: 0;
+  border-radius: 0;
+  border-color: $textColorDark;
+  color: $textColorDark;
+}
+
+::ng-deep .p-button-outlined:hover {
+  border-radius: 0;
+  background-color: transparent;
+  border-color: $textColorDark;
+  color: $textColorDark;
+}
+::ng-deep .p-button-label {
+  line-height: 1.5;
+  padding-block: toRem(12);
+  color: $textColorDark;
+  font-family: $fontHelvetica-neue;
+}
+@media (max-width: toEm(640)) {
+  ::ng-deep .subscribe-btn {
+    background-color: $textColorLight;
+    border-color: $textColorLight;
+    color: $textColorLight;
+  }
+  ::ng-deep .p-button-outlined {
+    background-color: $backgroundColorLight;
+    border-color: $textColorLight;
+    &:hover {
+      border-color: $textColorLight;
+      color: $textColorLight !important;
+      background: $textColorDark !important;
+    }
+  }
+  ::ng-deep .p-button-label {
+    color: $textColorDark;
+  }
+  ::ng-deep span {
+    @include adaptiveValue("padding-block", 15, 11);
+    border: toRem(0.5) solid $backgroundColorLight;
+    @media (max-width: toEm(482)) {
+      @include adaptiveValue("padding-block", 15, 9);
+    }
+  }
+}

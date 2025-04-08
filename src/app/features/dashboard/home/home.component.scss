@@ -1,0 +1,285 @@
+@import "main";
+
+:host {
+  display: block;
+  width: 100%;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+app-header {
+  z-index: 1000;
+}
+.hero-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+app-hero-banner {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  z-index: 1;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.52);
+    z-index: -1;
+  }
+
+  background-image: url(@assets/image/main_page/main_img.webp);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.main-container {
+  flex: 1;
+  // .main-container__block
+
+  &__block {
+    padding-inline: toRem(10);
+    margin: 0 auto;
+    max-width: toRem(1300);
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    justify-content: center;
+    @include adaptiveValue("padding-block", 60, 20);
+    overflow: hidden;
+
+    h3 {
+      padding-bottom: toRem(20);
+    }
+  }
+  .catalog-new-product {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, toRem(635)));
+    @include adaptiveValue("column-gap", 30, 5);
+
+    @media (max-width: toEm(550)) {
+      grid-template-columns: 1fr;
+      row-gap: toRem(20);
+    }
+
+    &__card {
+      position: relative;
+      max-width: toRem(635);
+      width: 100%;
+    }
+
+    .link-women,
+    .link-men {
+      position: absolute;
+      top: toRem(8);
+      left: toRem(8);
+      text-decoration: underline;
+      @include adaptiveValue("font-size", 16, 14);
+
+      @media (max-width: toEm(550)) {
+        text-transform: uppercase;
+      }
+    }
+
+    .img-link {
+      display: block;
+      width: 100%;
+      max-width: toRem(635);
+      max-height: toRem(535);
+      text-decoration: none;
+      color: $textColorDark;
+      text-decoration: underline;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        aspect-ratio: 635/535;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .brands {
+
+    &__card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      @include adaptiveValue("gap", 20, 7);
+
+      .title-link {
+        width: 100%;
+        font-family: $fontHeiti;
+        font-weight: 300;
+        @include adaptiveValue("font-size", 34, 20);
+        line-height: 1.5;
+
+        @media (max-width: toEm(550)) {
+          font-weight: 400;
+          color: $textColorLight;
+          position: absolute;
+          top: toRem(12);
+          left: toRem(10);
+        }
+      }
+
+    .go-to-shop {
+      display: none;
+
+      @media (max-width: toEm(550)) {
+        display: block;
+        position: absolute;
+        top: toRem(50);
+        left: toRem(10);
+        font-family: $fontHelvetica-neue;
+        color: $textColorLight;
+        line-height: 1.5;
+        font-size: toRem(14);
+        text-decoration: underline;
+      }
+    }
+    }
+    .wrapper-img {
+      max-width: toRem(635);
+      width: 100%;
+    }
+    .img-link {
+      max-width: toRem(635);
+      max-height: toRem(535);
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        aspect-ratio: 635/535;
+        vertical-align: middle;
+      }
+    }
+  }
+h3 {
+      font-family: $fontHeiti;
+      font-weight: 300;
+      @include adaptiveValue("font-size", 34, 18);
+      line-height: 1.5;
+    }
+  &__bestsellers-product {
+    &__card {
+      position: relative;
+      max-width: toRem(635);
+      width: 100%;
+
+      .link-women,
+      .link-men {
+        position: absolute;
+        top: toRem(8);
+        left: toRem(8);
+        text-decoration: underline;
+        @include adaptiveValue("font-size", 16, 8);
+      }
+    }
+
+    .img-link {
+      display: block;
+      width: 100%;
+      max-width: toRem(635);
+      max-height: toRem(535);
+      text-decoration: none;
+      color: $textColorDark;
+      text-decoration: underline;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        aspect-ratio: 635/535;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+.special-sale {
+  .bg-wrapper {
+    @include adaptiveValue("padding-block", 96, 21);
+    @include adaptiveValue("padding-left", 85, 6);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    @include adaptiveValue("height", 668, 396);
+    width: 100%;
+    background-image: url(@assets/image/sale_block/sale-img.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  &__info-block {
+    display: flex;
+    flex-direction: column;
+    @include adaptiveValue("gap", 20, 8);
+    justify-content: space-between;
+
+    h2 {
+      font-family: $fontHeiti;
+      font-weight: 300;
+      line-height: 1.5;
+      color: $textColorLight;
+      @include adaptiveValue("font-size", 40, 20);
+    }
+  }
+}
+.catalog-new-product {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, toRem(635)));
+  @include adaptiveValue("column-gap", 30, 5);
+
+  @media (max-width: toEm(550)) {
+    grid-template-columns: 1fr;
+    row-gap: toRem(20);
+  }
+}
+
+.bestsellers-product,
+.catalog-new-product,
+.brands  {
+  width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, toRem(635)));
+    @include adaptiveValue("column-gap", 30, 5);
+
+    @media (max-width: toEm(550)) {
+      grid-template-columns: 1fr;
+      row-gap: toRem(20);
+    }
+
+    &__card {
+        position: relative;
+        max-width: toRem(635);
+        width: 100%;
+      }
+}
+.link-women,
+.link-men {
+  position: absolute;
+  top: toRem(12);
+  left: toRem(10);
+  text-decoration: underline;
+  @include adaptiveValue("font-size", 16, 14);
+
+  @media (max-width: toEm(550)) {
+    text-transform: uppercase;
+  }
+}
