@@ -1,0 +1,17 @@
+<div class="wrapper" [class.scrolled]="scrolled">
+  <div class="card flex justify-center">
+    <p-menu #menu [model]="menuItems" [popup]="true" />
+    <p-button (click)="menu.toggle($event)" icon="pi-mobile pi pi-bars" />
+  </div>
+
+  <div class="logo">
+    <h2>DRESSIFY</h2>
+  </div>
+
+  <div class="search-wrapper">
+    <p-button icon="pi pi-search pi-search-icon" (click)="toggleInput()"></p-button>
+    <div *ngIf="inputVisible" class="input-container">
+      <input type="text" class="input-text" [(ngModel)]="searchText" placeholder="Search..." />
+    </div>
+  </div>
+</div>

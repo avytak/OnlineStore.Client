@@ -1,4 +1,6 @@
-<header [class.scrolled]="isScrolled">
-  <app-top-header></app-top-header>
-  <app-bottom-header></app-bottom-header>
+<header [class.scrolled]="isScrolled" (scroll)="onWindowScroll()">
+  <div class="wrapper">
+    <app-header-desktop *ngIf="isDesktop" [scrolled]="isScrolled"></app-header-desktop>
+    <app-header-mobile *ngIf="!isDesktop" [scrolled]="isScrolled"></app-header-mobile>
+  </div>
 </header>

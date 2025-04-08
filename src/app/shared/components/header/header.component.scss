@@ -6,18 +6,22 @@ header {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  @include adaptiveValue("padding-block", 30, 15);
-  font-weight: 400;
-  max-width: toRem(1300);
   width: 100%;
-  padding-inline: toRem(15);
-  display: flex;
-  flex-direction: column;
   background: transparent;
   transition: background 0.3s ease, color 0.3s ease;
 }
-
+.wrapper {
+  padding-inline: toRem(15);
+  display: flex;
+  flex-direction: column;
+  @include adaptiveValue("padding-block", 30, 10);
+  font-weight: 400;
+  max-width: toRem(1300);
+  width: 100%;
+  margin: 0 auto;
+  @include adaptiveValue("padding-inline", 15, 8);
+}
 .scrolled {
-  background: $backgroundColorLight;
+  background: $backgroundColorLight !important;
   color: $textColorDark !important;
 }

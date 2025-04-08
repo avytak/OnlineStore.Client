@@ -24,6 +24,7 @@ export class SignupComponent {
   public isFormValid = false;
   public registrationErrorMessage: string | null = null;
   public destroyRef = inject(DestroyRef);
+  public loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -50,7 +51,19 @@ export class SignupComponent {
   private passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
     const rePassword = control.get('rePassword')?.value;
-    return password !== rePassword ? { passwordsNotMatch: true } : null;
+    if (password && rePassword && password !== rePassword) {
+      control.get('rePassword')?.setErrors({ passwordsNotMatch: true });
+    } else {
+      const errors = control.get('rePassword')?.errors;
+      if (errors) {
+        delete errors['passwordsNotMatch'];
+        if (Object.keys(errors).length === 0) {
+          control.get('rePassword')?.setErrors(null);
+        }
+      }
+    }
+
+    return null;
   }
 
   public checkFormValidity(): void {
@@ -58,10 +71,14 @@ export class SignupComponent {
   }
 
   public onSubmit(): void {
-    this.authData.markAllAsTouched();
-    if (this.authData.invalid) return;
-
     this.registrationErrorMessage = null;
+    this.authData.markAllAsTouched();
+
+    if (this.authData.invalid) {
+      return;
+    }
+
+    this.loading = true;
 
     const { email, password, rememberMe } = this.authData.value;
     const storageType = rememberMe ? StorageType.Local : StorageType.Session;
@@ -91,6 +108,8 @@ export class SignupComponent {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((result) => {
+        this.loading = false;
+        
         if (result.success) {
           this.ref.close({ email, password });
         } else {

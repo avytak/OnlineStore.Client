@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { UiKitModule } from '../../shared/ui-kit/ui-kit.module';
@@ -12,7 +12,8 @@ import { InputGroup } from 'primeng/inputgroup';
     ReactiveFormsModule,
     CommonModule,
     InputGroup,
-    UiKitModule
+    FormsModule,
+    UiKitModule,
   ],
   exports: [SignupComponent, LoginComponent]
 })

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ROUTES } from '@shared/constants/app-routing.constants';
 import { UiKitModule } from '@shared/ui-kit/ui-kit.module';
 
 @Component({
@@ -9,5 +10,5 @@ import { UiKitModule } from '@shared/ui-kit/ui-kit.module';
   styleUrl: './discover-button.component.scss'
 })
 export class DiscoverButtonComponent {
-
+  public ROUTES = ROUTES;
 }

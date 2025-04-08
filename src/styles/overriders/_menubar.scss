@@ -1,0 +1,52 @@
+::ng-deep .p-menubar {
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+::ng-deep .p-menubar-item {
+  flex-shrink: 0;
+  flex-basis: auto;
+}
+::ng-deep .p-menubar-root-list {
+  max-width: toRem(779);
+  flex-wrap: nowrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include adaptiveValue("gap", 40, 1);
+}
+::ng-deep .p-menubar-item-label {
+  color: $textColorLight;
+  font-family: "Sora", sans-serif;
+  @include adaptiveValue("font-size", 16, 12);
+  text-transform: capitalize;
+  line-height: 1.5;
+}
+
+::ng-deep .p-menubar-item-content {
+  transform-origin: center center;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    background-color: transparent !important;
+    transform: scale(1.09);
+    transition: all ease 0.3s;
+  }
+  &:focus {
+    text-decoration: underline;
+    background-color: transparent;
+  }
+}
+::ng-deep .scrolled .p-menubar-item-label {
+  color: $textColorDark;
+}
+::ng-deep
+  .p-menubar-root-list
+  > .p-menubar-item
+  > .p-menubar-item-content
+  > .p-menubar-item-link {
+  padding: 0;
+}
+.scrolled .p-button-icon {
+  color: $textColorDark !important;
+}

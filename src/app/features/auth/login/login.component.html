@@ -1,6 +1,8 @@
-<div class="title">Log In</div>
+<div class="auth-block">
+<div class="dialog-title">Log In</div>
 
-<form [formGroup]="authData" (ngSubmit)="onSubmit()" class="flex flex-column align-items-center gap-4 mt-2 w-full">
+<form [formGroup]="authData" (ngSubmit)="onSubmit()" class="flex flex-column align-items-center mt-2 auth-block__form">
+  <div class="form-wrap">
   <!-- Email -->
   <p-message
   *ngIf="loginErrorMessage"
@@ -9,9 +11,9 @@
 >
   {{ loginErrorMessage }}
 </p-message>
-  <div class="card p-1 w-full md:w-25rem">
-    <div class="flex flex-column gap-2">
-      <label for="email">Email</label>
+  <div class="card p-1">
+    <div class="flex flex-column gap-1">
+      <label class="dialog-label" for="email">E-mail</label>
       <input
         pInputText
         id="email"
@@ -19,6 +21,7 @@
         placeholder="lanaluk1977@gmail.com"
         aria-describedby="email-help"
         autocomplete="email"
+        class="dialog-input"
       />
       <p-message
         *ngIf="authData.get('email')?.invalid && authData.get('email')?.touched"
@@ -31,24 +34,20 @@
   </div>
 
   <!-- Password -->
-  <div class="card p-1 w-full md:w-25rem">
-    <div class="flex flex-column gap-2 relative">
-      <label for="password">Password</label>
-      <div class="flex align-items-center gap-2">
+  <div class="card p-1">
+    <div class="flex flex-column gap-1 relative">
+      <label class="dialog-label" for="password">Password</label>
+      <div class="flex align-items-center gap-1 relative">
         <input
           [type]="isPasswordVisible ? 'text' : 'password'"
           pInputText
           id="password"
           formControlName="password"
-          placeholder="Enter your password"
+          placeholder="ХХХХХХ"
           autocomplete="password"
-          class="flex-1 pr-4"
+          class="flex-1 pr-4 dialog-input"
         />
-        <i
-          class="pi absolute pi-eye"
-          [ngClass]="isPasswordVisible ? 'pi-eye-slash' : 'pi-eye'"
-          (click)="togglePasswordVisibility()"
-        ></i>
+        <i class="pi" [class.pi-eye-slash]="isPasswordVisible" [class.pi-eye]="!isPasswordVisible" (click)="togglePasswordVisibility()"></i>
       </div>
       <p-message
         *ngIf="authData.get('password')?.invalid && authData.get('password')?.touched"
@@ -60,43 +59,47 @@
     </div>
   </div>
 
-<!-- Top block: Remember me + Forgotten password -->
-<div class="flex justify-content-between align-items-center w-full md:w-25rem text-xs mt-3 reminder-top">
+<!-- forgotten-remember block -->
+<div class="flex justify-content-between align-items-center text-xs mt-3 reminder-top">
   <a href="#" class="forgotten-password">Forgotten password?</a>
-  <div class="flex align-items-center gap-1 reminder-data">
-    <input id="rememberme" type="checkbox" formControlName="rememberMe" />
-    <label for="rememberme">Remember me</label>
+  <div class="flex align-items-center gap-1 reminder-data rememberme-block">
+      <p-checkbox class="input-cheked" formControlName="rememberMe" id="rememberme" [binary]="true" />
+    <label class="label-rememberme" for="rememberme">Remember me</label>
   </div>
 </div>
 
-<!-- Buttons & additional -->
-<div class="flex flex-column align-items-center gap-4 mt-4 w-full additional-info">
+<!-- Action block -->
+<div class="flex flex-column align-items-center gap-4 mt-4 additional-info">
 
   <!-- Log In + Google -->
-  <div class="card p-4 w-full md:w-25rem flex flex-column gap-3 confirms-block">
+  <div class="card flex flex-column gap-3 confirms-block">
     <p-button
       type="submit"
       label="Log In"
       class="auth-btn"
       [disabled]="authData.invalid"
+      [loading]="loading"
     ></p-button>
 
     <p-button
       severity="secondary"
       [link]="true"
       class="login-google-btn"
-      label="Log in with Google"
+      label="Sign up with Google"
       variant="outlined"
     ></p-button>
   </div>
 </div>
 
   <!-- Login as guest -->
-  <a href="#" class="login-as-guest">Log in as a guest</a>
-
+  <div class="login-as-guest">
+    <a href="#">Log in as a guest</a>
+  </div>
   <!-- Bottom: Sign Up -->
   <div class="text-center flex align-items-center gap-2 additional-info-bottom">
-    <span>Don’t have an account?</span>
+    <a href="#">Don’t have an account?</a>
     <a class="additional-info-bottom__login font-medium text-primary cursor-pointer" (click)="openSignUp()">Sign Up</a>
   </div>
+</div>
 </form>
+</div>

@@ -1,16 +1,15 @@
-
-::ng-deep.login-google-btn {
-  font-weight: 400;
-  font-size: toRem(16);
-  line-height: 1.5;
-  background-color: #fff;
+::ng-deep .auth-btn {
+  width: 100%;
 }
 ::ng-deep .auth-btn button {
-  --p-button-primary-background: #000;
-  border: 1px solid #000;
-  opacity: 1 !important;
+  width: 100%;
+}
+::ng-deep .login-google-btn button {
+  width: 100%;
+  border-radius: 0;
 }
 ::ng-deep .login-google-btn span {
+  width: 100%;
   font-weight: 400;
   font-size: toRem(16);
   line-height: 1.5;
@@ -20,12 +19,17 @@
 ::ng-deep .p-button-label {
   font-weight: 500;
   font-size: toRem(16);
-  color: $textColorLight;
+  color: $textWhite;
   border: 0;
 }
-.confirms-block {
-  ::ng-deep button {
-    width: 100%;
-    border-radius: 0;
-  }
+::ng-deep .p-button {
+  background-color: transparent;
+  border-color: transparent;
+  padding: 0;
+}
+::ng-deep .pi-mobile .pi-search {
+  @include adaptiveValue("font-size", 30, 20);
+  opacity: 0.9;
+  padding: 0;
+  border: 0;
 }

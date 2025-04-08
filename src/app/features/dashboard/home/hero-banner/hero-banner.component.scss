@@ -28,7 +28,7 @@
   }
   span {
     font-family: $fontHelvetica-neue;
-    @include adaptiveValue("font-size", 18, 9);
+    @include adaptiveValue("font-size", 18, 10);
     line-height: 1.5;
     color: #e5e5e5;
     border: 0;

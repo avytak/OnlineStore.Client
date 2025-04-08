@@ -20,6 +20,7 @@ export class LoginComponent {
   public authData: FormGroup;
   public loginErrorMessage: string | null = null;
   public destroyRef = inject(DestroyRef);
+  public loading: boolean = false;
 
   constructor(
     private dialogService: DialogService,
@@ -28,7 +29,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private apiAuthService: ApiAuthService,
+    private apiAuthService: ApiAuthService
   ) {
     this.authData = this.fb.group({
       email: [null, [Validators.email, Validators.required]],
@@ -43,15 +44,25 @@ export class LoginComponent {
 
     if (this.authData.invalid) return;
 
+    this.loading = true;
+
     const { email, password, rememberMe } = this.authData.value;
     const storageType = rememberMe ? StorageType.Local : StorageType.Session;
     this.authService.initializeStorage(storageType);
 
-    this.apiAuthService.loginUser(email, password)
+    this.apiAuthService
+      .loginUser(email, password)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: ({ token, user }) => {
-          if (token && user && typeof user.id === 'number' && typeof user.email === 'string') {
+          this.loading = false;
+
+          if (
+            token &&
+            user &&
+            typeof user.id === 'number' &&
+            typeof user.email === 'string'
+          ) {
             this.authService.setToken(token);
             this.authService.setUser({ id: user.id, email: user.email });
             this.ref.close();
@@ -61,21 +72,27 @@ export class LoginComponent {
           }
         },
         error: (err) => {
+          this.loading = false;
           const errorMessage = err?.error?.message || 'Login failed';
 
-          if (errorMessage.toLowerCase().includes('authorization is not confirmed')) {
-            this.loginErrorMessage = 'Your account is not verified. Please check your email.';
+          if (
+            errorMessage
+              .toLowerCase()
+              .includes('authorization is not confirmed')
+          ) {
+            this.loginErrorMessage =
+              'Your account is not verified. Please check your email.';
           } else {
             this.loginErrorMessage = 'Invalid email or password.';
           }
-        }
+        },
       });
   }
 
   public openSignUp(): void {
     const dialogRef = this.dialogService.open(SignupComponent, {
       modal: true,
-      closable: false,
+      closable: true,
     });
 
     dialogRef.onClose

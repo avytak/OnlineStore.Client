@@ -1,0 +1,39 @@
+@import "main";
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  h2 {
+    @include adaptiveValue("font-size", 36, 24);
+    line-height: 1.8;
+    font-family: $fontSora;
+  }
+}
+.pi-search-icon {
+  position: relative;
+}
+.input-container {
+  width: 85%;
+  position: absolute;
+  top: 25%;
+  left: 14%;
+}
+.input-text {
+  border-radius: toRem(8);
+opacity: 0.99;
+  width: 100%;
+  padding: toRem(8);
+  color: $textColorDark;
+  font-family: $fontSora;
+  background-color: $textColorLight;
+  border: toRem(1) solid $backgroundColorLight;
+}
+.scrolled .pi-search::before{
+  background: $backgroundColorLight;
+  color: $textColorDark;
+  filter: invert(100%);
+}

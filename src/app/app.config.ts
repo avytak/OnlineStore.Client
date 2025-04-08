@@ -8,6 +8,7 @@ import { MyPreset } from '../styles';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthModule } from './features/auth/auth.module';
 import { AuthInterceptor } from '@core/interceptors/auth.interceptor';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,6 +26,7 @@ export const appConfig: ApplicationConfig = {
         }
       },
     }),
-    AuthModule
+    AuthModule,
+    BreakpointObserver,
   ],
 };
