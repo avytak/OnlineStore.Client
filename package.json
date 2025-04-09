@@ -9,8 +9,10 @@
     "test": "ng test"
   },
   "private": true,
+  "homepage": "https://lesia-grapeniuk.github.io/OnlineStore.Client",
   "dependencies": {
     "@primeng/themes": "^19.0.5",
+    "jwt-decode": "^4.0.0",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.5",
@@ -34,6 +36,7 @@
     "@angular/router": "19.0.6",
     "@schematics/angular": "19.0.6",
     "@types/jasmine": "5.1.0",
+    "angular-cli-ghpages": "^2.0.3",
     "jasmine-core": "5.4.0",
     "karma": "6.4.0",
     "karma-chrome-launcher": "3.2.0",

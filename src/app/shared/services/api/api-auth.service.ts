@@ -21,9 +21,11 @@ export class ApiAuthService {
     return this.http.post<UserInformation>(`${this.apiUrl}/create`, body);
   }
 
-  public loginUser(email: string, password: string): Observable<LoginResponse> {
+  public loginUser(email: string, password: string): Observable<string> {
     const body = { email, password };
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, body);
+    return this.http.post(`${this.apiUrl}/login`, body, {
+      responseType: 'text',
+    });
   }
 
   public verifyUser(code: string, id: string): Observable<VerifyResponse> {
