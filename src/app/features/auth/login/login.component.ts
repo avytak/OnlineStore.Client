@@ -87,7 +87,7 @@ export class LoginComponent {
           } else if (err?.status === 0) {
             this.loginErrorMessage = 'No connection to the server.';
           } else {
-            this.loginErrorMessage = 'Something went wrong. Please try again.';
+            this.loginErrorMessage = 'Authorization is not confirmed. Please check your email to complete verification.';
           }
         }
       });
