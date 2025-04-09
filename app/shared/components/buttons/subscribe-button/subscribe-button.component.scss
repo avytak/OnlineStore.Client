@@ -30,3 +30,6 @@
   color: $textColorDark;
   font-family: $fontHelvetica-neue;
 }
+::ng-deep .subscribe__btn .p-button-label {
+color: $textColorDark !important;
+}
