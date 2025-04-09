@@ -7,9 +7,6 @@
 ::ng-deep .p-dialog {
   border-radius: 0;
   width: 35%;
-  // @include adaptiveValue('width', 475, 300);
-  // max-width: toRem(475);
-  // min-width: toRem(300);
   @include adaptiveValue("padding-block", 30, 10);
   @include adaptiveValue("padding-inline", 26, 8);
   gap: toRem(10);

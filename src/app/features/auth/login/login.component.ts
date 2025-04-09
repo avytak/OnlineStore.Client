@@ -54,38 +54,35 @@ export class LoginComponent {
       .loginUser(email, password)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: ({ token, user }) => {
+        next: (token: string) => {
           this.loading = false;
 
-          if (
-            token &&
-            user &&
-            typeof user.id === 'number' &&
-            typeof user.email === 'string'
-          ) {
-            this.authService.setToken(token);
-            this.authService.setUser({ id: user.id, email: user.email });
-            this.ref.close();
-            this.router.navigate(['/home']);
-          } else {
-            this.loginErrorMessage = 'Invalid response from server.';
+          if (!token) {
+            this.loginErrorMessage = 'No token received.';
+            return;
           }
+
+          this.authService.setToken(token);
+          this.authService.setUser({ id: 1, email });
+
+          this.ref.close();
+          this.router.navigate(['/home']);
         },
         error: (err) => {
           this.loading = false;
           const errorMessage = err?.error?.message || 'Login failed';
+          const statusCode = err?.status;
 
-          if (
-            errorMessage
-              .toLowerCase()
-              .includes('authorization is not confirmed')
-          ) {
-            this.loginErrorMessage =
-              'Your account is not verified. Please check your email.';
-          } else {
+          if (errorMessage?.toLowerCase().includes('authorization is not confirmed')) {
+            this.loginErrorMessage = 'Your account is not verified. Please check your email.';
+          } else if (statusCode === 400) {
             this.loginErrorMessage = 'Invalid email or password.';
+          } else if (statusCode === 0) {
+            this.loginErrorMessage = 'No connection to the server.';
+          } else {
+            this.loginErrorMessage = 'Authorization is not confirmed. Please check your email to complete verification.';
           }
-        },
+        }
       });
   }
 

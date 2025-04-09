@@ -19,7 +19,6 @@
   @include adaptiveValue("gap", 20, 5);
   font-family: $fontHelvetica-neue;
   max-width: toRem(475);
-  // min-width: toRem(300);
   &__form {
     width: 100%;
   }
@@ -31,7 +30,6 @@
 ::ng-deep .p-dialog-content {
   @include adaptiveValue("width", 475, 300);
   width: 100% !important;
-  // overflow-y: hidden;
   padding: 0;
 }
 ::ng-deep .confirms-block {
@@ -99,16 +97,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  @include adaptiveValue('font-size', 14, 12);
+  @include adaptiveValue("font-size", 14, 12);
   font-family: $fontHelvetica-neue;
   font-weight: 400;
   line-height: 1.5;
   gap: toRem(20);
 }
 ::ng-deep .additional-info-bottom__login {
-
-    text-decoration: underline !important;
-
+  text-decoration: underline !important;
 }
 ::ng-deep .reminder-data {
   display: flex;
@@ -138,4 +134,11 @@
 ::ng-deep .forgotten-password {
   text-decoration: underline;
   max-width: toRem(120);
+}
+::ng-deep .p-message-error {
+  width: 70% !important;
+  margin: 0 auto;
+}
+::ng-deep .p-message-content {
+  justify-content: center;
 }
