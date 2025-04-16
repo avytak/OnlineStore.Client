@@ -17,7 +17,10 @@ import { Checkbox } from 'primeng/checkbox';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { FormsModule } from '@angular/forms';
-
+import { Tag } from 'primeng/tag';
+import { Carousel } from 'primeng/carousel';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
   declarations: [],
@@ -37,7 +40,11 @@ import { FormsModule } from '@angular/forms';
     Checkbox,
     InputIcon,
     IconField,
-    FormsModule
+    FormsModule,
+    Carousel,
+    Tag,
+    AutoCompleteModule,
+    OverlayPanelModule
   ],
   exports: [
     InputIcon,
@@ -54,6 +61,10 @@ import { FormsModule } from '@angular/forms';
     AccordionModule,
     DialogModule,
     Checkbox,
+    Carousel,
+    Tag,
+    AutoCompleteModule,
+    OverlayPanelModule
   ]
 })
 export class UiKitModule { }

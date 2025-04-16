@@ -3,11 +3,12 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { UiKitModule } from '@shared/ui-kit/ui-kit.module';
 import { LoginComponent } from '@features/auth/login/login.component';
 import { ApiAuthService } from '@shared/services/api/api-auth.service';
-import { DESKTOP_MENU_ITEMS, GENDER_LINKS } from '@shared/constants/app-routing.constants';
+import { GENDER_LINKS, MENU_ITEMS } from '@shared/constants/app-routing.constants';
 import { MenuItem } from 'primeng/api';
 import { RouterModule } from '@angular/router';
 import { inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthUiService } from '@shared/services/business/auth-ui.service';
 
 @Component({
   selector: 'app-header-desktop',
@@ -24,34 +25,16 @@ export class HeaderDesktopComponent implements OnInit {
 
   constructor(
     private dialogService: DialogService,
-    private apiAuth: ApiAuthService
+    private apiAuth: ApiAuthService,
+    public authUi: AuthUiService
   ) {}
 
   ngOnInit() {
-    this.menuItems = DESKTOP_MENU_ITEMS
+    this.menuItems = MENU_ITEMS;
   }
 
   public openDialog(): void {
-    const dialogRef = this.dialogService
-      .open(LoginComponent, {
-        modal: true,
-        closable: true,
-      })
-      .onClose
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((result) => {
-        if (result) {
-          const { email, password } = result;
-          this.apiAuth.registerUser(email, password).subscribe({
-            next: (response) => {
-              console.log('Користувач успішно зареєстрований', response);
-            },
-            error: (error) => {
-              console.error('Помилка реєстрації', error);
-            },
-          });
-        }
-      });
+    this.authUi.openLoginDialog();
   }
 
   public openBasket() {
