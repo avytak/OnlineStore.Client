@@ -20,7 +20,7 @@ import { DisplayGenderPipe } from '@shared/pipes/display-gender.pipe';
   styleUrls: ['./mobile-category-menu.component.scss'],
 })
 export class MobileCategoryMenuComponent {
-  @Input() readonly menuItems: MenuItem[] = MENU_ITEMS;
+  @Input() menuItems: MenuItem[] = MENU_ITEMS;
   @Output() close = new EventEmitter<void>();
 
   public Gender: typeof Gender = Gender;
