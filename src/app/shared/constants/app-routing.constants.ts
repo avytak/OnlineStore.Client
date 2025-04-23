@@ -1,3 +1,5 @@
+import { MenuItem } from "primeng/api";
+
 export const ROUTES = {
   NEW_IN: '/new-in',
   BRANDS: '/brands',
@@ -20,7 +22,7 @@ export const GENDER_LINKS = {
   },
 }
 
-export const MENU_ITEMS = [
+export const MENU_ITEMS: MenuItem[] = [
   { label: 'New in', routerLink: [ROUTES.NEW_IN] },
   { label: 'Brands', routerLink: [ROUTES.BRANDS] },
   { label: 'Clothing', routerLink: [ROUTES.CLOTHING] },

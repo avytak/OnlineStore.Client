@@ -2,8 +2,8 @@
   <!-- Top: Gender switch and close -->
   <div class="mobile-menu-header">
     <div class="gender-switch">
-      <button (click)="setGender('her')" [class.active]="activeGender === 'her'">She</button>
-      <button (click)="setGender('him')" [class.active]="activeGender === 'him'">He</button>
+      <button (click)="setGender(Gender.Her)" [class.active]="activeGender === Gender.Her">She</button>
+      <button (click)="setGender(Gender.Him)" [class.active]="activeGender === Gender.Him">He</button>
     </div>
     <div class="user-action-panel">
       <button class="user-action-panel__basket"></button>
@@ -13,10 +13,10 @@
   </div>
 
   <!-- Main view: List of categories -->
-  <ng-container *ngIf="currentView === 'main'">
+  <ng-container *ngIf="currentView === MenuView.Main">
     <ul class="menu-category-list">
       <li *ngFor="let item of menuItems">
-        <button class="category-item" (click)="openSubcategory(sanitizeLabel(item.label))">
+        <button class="category-item" (click)="openSubcategory(item.label)">
           <span [innerHTML]="item.label"></span>
           <span class="category-item__arrow-icon"></span>
         </button>
@@ -25,7 +25,7 @@
   </ng-container>
 
   <!-- Subcategory view -->
-  <ng-container *ngIf="currentView === 'subcategory'">
+  <ng-container *ngIf="currentView === MenuView.Subcategory">
     <div class="subcategory-header">
       <button class="back-btn" (click)="backToMain()"></button>
       <h3>{{ selectedCategory }}</h3>
@@ -33,12 +33,7 @@
 
     <div class="subcategory-blocks">
       <div class="subcategory-list" *ngFor="let group of subcategories[selectedCategory!]">
-        <ng-container
-          *ngIf="activeGender === null
-          || (!group.title.toLowerCase().includes('category'))
-          || (activeGender === 'her' && group.title.toLowerCase().startsWith('women'))
-          || (activeGender === 'him' && group.title.toLowerCase().startsWith('men'))"
-        >
+        <ng-container *ngIf="group.title | displayGender:activeGender">
           <h5 class="subcategory-title">{{ group.title }}</h5>
           <ul class="subblock-list">
             <li *ngFor="let item of group.items">
