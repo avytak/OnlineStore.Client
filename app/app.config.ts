@@ -9,6 +9,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthModule } from './features/auth/auth.module';
 import { AuthInterceptor } from '@core/interceptors/auth.interceptor';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { DialogService } from 'primeng/dynamicdialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +27,7 @@ export const appConfig: ApplicationConfig = {
         }
       },
     }),
+    DialogService,
     AuthModule,
     BreakpointObserver,
   ],
