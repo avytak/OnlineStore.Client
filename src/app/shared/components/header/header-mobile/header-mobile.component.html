@@ -1,17 +1,29 @@
 <div class="wrapper" [class.scrolled]="scrolled">
+
   <div class="card flex justify-center">
-    <p-menu #menu [model]="menuItems" [popup]="true" />
-    <p-button (click)="menu.toggle($event)" icon="pi-mobile pi pi-bars" />
+    <p-button (click)="toggleMenu()" icon="pi-mobile pi pi-bars"></p-button>
   </div>
 
+  <!-- Mobile category menu -->
+  <app-mobile-category-menu *ngIf="menuOpen" [menuItems]="menuItems" (close)="toggleMenu()"></app-mobile-category-menu>
+
+  <!-- Logo -->
   <div class="logo">
     <h2>DRESSIFY</h2>
   </div>
 
+  <!-- Search -->
   <div class="search-wrapper">
-    <p-button icon="pi pi-search pi-search-icon" (click)="toggleInput()"></p-button>
+    <button class="search-button" (click)="toggleInput()"></button>
     <div *ngIf="inputVisible" class="input-container">
-      <input type="text" class="input-text" [(ngModel)]="searchText" placeholder="Search..." />
+      <input
+        type="text"
+        class="input-text"
+        [(ngModel)]="searchText"
+        (keydown.enter)="onSearch()"
+      />
     </div>
+    <button *ngIf="inputVisible" class="close-input-text" (click)="clearSearch()"></button>
   </div>
+
 </div>
